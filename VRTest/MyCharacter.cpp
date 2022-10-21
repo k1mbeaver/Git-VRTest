@@ -24,6 +24,9 @@ AMyCharacter::AMyCharacter()
 
 	MeshLeft->SetupAttachment(MotionLeft);
 	MeshRight->SetupAttachment(MotionRight);
+
+	IsRightGrip = false;
+	IsLeftGrip = false;
 }
 
 // Called when the game starts or when spawned
@@ -33,7 +36,8 @@ void AMyCharacter::BeginPlay()
 	
 	LeftHandInstance = Cast<UPlayerAnim>(MeshLeft->GetAnimInstance());
 	RightHandInstance = Cast<UPlayerAnim>(MeshRight->GetAnimInstance());
-	//GetWorldSettings()->SetTimeDilation(0.3f);
+
+	GetWorldSettings()->SetTimeDilation(0.5f);
 }
 
 // Called every frame
@@ -56,25 +60,62 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::PressedLeftGrip()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-	LeftHandInstance->bGrip = true;
+	if (!IsLeftGrip)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
+		LeftHandInstance->bGrip = true;
+	}
 }
 
 void AMyCharacter::ReleasedLeftGrip()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-	LeftHandInstance->bGrip = false;
+	if (!IsLeftGrip)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
+		LeftHandInstance->bGrip = false;
+	}
 }
 
 void AMyCharacter::PressedRightGrip()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-	RightHandInstance->bGrip = true;
+	if (!IsRightGrip)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
+		RightHandInstance->bGrip = true;
+	}
 }
 
 void AMyCharacter::ReleasedRightGrip()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-	RightHandInstance->bGrip = false;
+	if (!IsRightGrip)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
+		RightHandInstance->bGrip = false;
+	}
 }
 
+void AMyCharacter::SetIsRightGrip()
+{
+	if (IsRightGrip)
+	{
+		IsRightGrip = false;
+	}
+
+	else
+	{
+		IsRightGrip = true;
+	}
+}
+
+void AMyCharacter::SetIsLeftGrip()
+{
+	if (IsLeftGrip)
+	{
+		IsLeftGrip = false;
+	}
+
+	else
+	{
+		IsLeftGrip = true;
+	}
+}

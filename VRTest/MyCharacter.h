@@ -38,6 +38,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Motion)
 		class USkeletalMeshComponent* MeshRight;
 
+	bool IsRightGrip;
+	bool IsLeftGrip;
+
 	class UPlayerAnim* LeftHandInstance;
 	class UPlayerAnim* RightHandInstance;
 
@@ -45,5 +48,11 @@ public:
 	void ReleasedLeftGrip();
 	void PressedRightGrip();
 	void ReleasedRightGrip();
+
+	UFUNCTION(BlueprintCallable)
+		void SetIsRightGrip();
+
+	UFUNCTION(BlueprintCallable)
+		void SetIsLeftGrip();
 
 };
