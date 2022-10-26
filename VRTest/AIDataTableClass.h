@@ -25,6 +25,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSubclassOf<class UAnimInstance> AIAnimation;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float AICharacterSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString AICharacterType;
 };
 
 
