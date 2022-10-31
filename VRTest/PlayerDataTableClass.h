@@ -18,6 +18,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int PlayerStage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UParticleSystem* PlayerShootingParticle;
 };
 
 UCLASS()
