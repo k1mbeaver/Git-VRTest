@@ -6,6 +6,14 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class EPlayerWeapon : uint8
+{
+	E_Punch = 0 UMETA(DisplayName = "Punch"),
+	E_Pistol = 1 UMETA(DisplayName = "Pistol"),
+	E_Object = 2 UMETA(DisplayName = "Object"),
+};
+
 UCLASS()
 class VRTEST_API AMyCharacter : public ACharacter
 {
@@ -38,8 +46,19 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Motion)
 		class USkeletalMeshComponent* MeshRight;
 
+
 	bool IsRightGrip;
 	bool IsLeftGrip;
+
+	// 플레이어의 현재 공격 무기 (주먹, 총, 물체)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	EPlayerWeapon PlayerWeapon;
+
+	UPROPERTY()
+		class APlayerPistol* myLeftPlayerPistol;
+
+	UPROPERTY()
+		class APlayerPistol* myRightPlayerPistol;
 
 	class UPlayerAnim* LeftHandInstance;
 	class UPlayerAnim* RightHandInstance;
@@ -55,4 +74,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetIsLeftGrip();
 
+	UFUNCTION(BlueprintCallable)
+		void SetPlayerWeapon(EPlayerWeapon myPlayerWeapon);
+
+	UFUNCTION(BlueprintCallable)
+		EPlayerWeapon GetPlayerWeapon();
+
+	UFUNCTION(BlueprintCallable)
+		void SetPlayerLeftPistol(UActorComponent* myPistol);
+
+	UFUNCTION(BlueprintCallable)
+		void SetPlayerRightPistol(UActorComponent* myPistol);
 };

@@ -3,8 +3,10 @@
 
 #include "MyCharacter.h"
 #include "PlayerAnim.h"
+#include "PlayerPistol.h"
 #include "MotionControllerComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ActorComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
@@ -27,6 +29,9 @@ AMyCharacter::AMyCharacter()
 
 	IsRightGrip = false;
 	IsLeftGrip = false;
+
+	// 현재 플레이어의 무기 상태는 주먹으로 디폴트값
+	PlayerWeapon = EPlayerWeapon::E_Punch;
 }
 
 // Called when the game starts or when spawned
@@ -60,37 +65,59 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::PressedLeftGrip()
 {
-	if (!IsLeftGrip)
+	if (PlayerWeapon == EPlayerWeapon::E_Punch)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-		LeftHandInstance->bGrip = true;
+		if (!IsLeftGrip)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("LeftPunchPressed"));
+			LeftHandInstance->bGrip = true;
+		}
+	}
+
+	else if (PlayerWeapon == EPlayerWeapon::E_Pistol)
+	{
+		//myLeftPlayerPistol->PlayerShot();
 	}
 }
 
 void AMyCharacter::ReleasedLeftGrip()
 {
-	if (!IsLeftGrip)
+	if (PlayerWeapon == EPlayerWeapon::E_Punch)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-		LeftHandInstance->bGrip = false;
+		if (!IsLeftGrip)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("LeftPunchReleased"));
+			LeftHandInstance->bGrip = false;
+		}
 	}
 }
 
 void AMyCharacter::PressedRightGrip()
 {
-	if (!IsRightGrip)
+	if (PlayerWeapon == EPlayerWeapon::E_Punch)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-		RightHandInstance->bGrip = true;
+		if (!IsRightGrip)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("RightPunchPressed"));
+			RightHandInstance->bGrip = true;
+		}
+	}
+
+	else if (PlayerWeapon == EPlayerWeapon::E_Pistol)
+	{
+		//myRightPlayerPistol->PlayerShot();
 	}
 }
 
 void AMyCharacter::ReleasedRightGrip()
 {
-	if (!IsRightGrip)
+	if (PlayerWeapon == EPlayerWeapon::E_Punch)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Test"));
-		RightHandInstance->bGrip = false;
+		if (!IsRightGrip)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("RightPunchReleased"));
+			RightHandInstance->bGrip = false;
+		}
 	}
 }
 
@@ -118,4 +145,24 @@ void AMyCharacter::SetIsLeftGrip()
 	{
 		IsLeftGrip = true;
 	}
+}
+
+void AMyCharacter::SetPlayerWeapon(EPlayerWeapon myPlayerWeapon)
+{
+	PlayerWeapon = myPlayerWeapon;
+}
+
+EPlayerWeapon AMyCharacter::GetPlayerWeapon()
+{
+	return PlayerWeapon;
+}
+
+void AMyCharacter::SetPlayerLeftPistol(UActorComponent* myPistol)
+{
+	myLeftPlayerPistol = Cast<APlayerPistol>(myPistol);
+}
+
+void AMyCharacter::SetPlayerRightPistol(UActorComponent* myPistol)
+{
+	myRightPlayerPistol = Cast<APlayerPistol>(myPistol);
 }
