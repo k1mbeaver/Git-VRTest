@@ -24,6 +24,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class APlayerProjectile> ProjectileClass;
 
+	class AMyPlayerController* myPlayerController;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,5 +36,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PlayerShot();
+
+	void SetPlayerController();
 
 };

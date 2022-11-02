@@ -34,16 +34,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(VisibleAnywhere, Category = Motion)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class UMotionControllerComponent* MotionLeft;
 
-	UPROPERTY(VisibleAnywhere, Category = Motion)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class UMotionControllerComponent* MotionRight;
 
-	UPROPERTY(VisibleAnywhere, Category = Motion)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class USkeletalMeshComponent* MeshLeft;
 
-	UPROPERTY(VisibleAnywhere, Category = Motion)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class USkeletalMeshComponent* MeshRight;
 
 

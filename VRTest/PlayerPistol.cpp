@@ -4,6 +4,7 @@
 #include "PlayerPistol.h"
 #include "Components/CapsuleComponent.h"
 #include "PlayerProjectile.h"
+#include "MyPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Controller.h"
