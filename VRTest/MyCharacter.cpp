@@ -27,15 +27,11 @@ AMyCharacter::AMyCharacter()
 	MeshLeft->SetupAttachment(MotionLeft);
 	MeshRight->SetupAttachment(MotionRight);
 
+	PlayerHasRightObject = false;
+	PlayerHasLeftObject = false;
+
 	IsRightGrip = false;
 	IsLeftGrip = false;
-
-	// 현재 플레이어가 무기를 집고 있지 않은가?
-	IsRightNotWeapon = true;
-	IsLeftNotWeapon = true;
-
-	// 현재 플레이어의 무기 상태는 주먹으로 디폴트값
-	PlayerWeapon = EPlayerWeapon::E_Punch;
 }
 
 // Called when the game starts or when spawned
@@ -137,24 +133,4 @@ void AMyCharacter::SetPlayerWeapon(EPlayerWeapon myPlayerWeapon)
 EPlayerWeapon AMyCharacter::GetPlayerWeapon()
 {
 	return PlayerWeapon;
-}
-
-void AMyCharacter::SetPlayerLeftPistol(UActorComponent* myPistol)
-{
-	myLeftPlayerPistol = Cast<APlayerPistol>(myPistol);
-}
-
-void AMyCharacter::SetPlayerRightPistol(UActorComponent* myPistol)
-{
-	myRightPlayerPistol = Cast<APlayerPistol>(myPistol);
-}
-
-void AMyCharacter::SetRightIsNotWeapon()
-{
-	IsRightNotWeapon = !IsRightNotWeapon;
-}
-
-void AMyCharacter::SetLeftIsNotWeapon()
-{
-	IsLeftNotWeapon = !IsLeftNotWeapon;
 }

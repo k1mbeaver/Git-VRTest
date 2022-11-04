@@ -50,21 +50,15 @@ public:
 	bool IsRightGrip;
 	bool IsLeftGrip;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsRightNotWeapon;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsLeftNotWeapon;
-
 	// 플레이어의 현재 공격 무기 (주먹, 총, 물체)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EPlayerWeapon PlayerWeapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class APlayerPistol* myLeftPlayerPistol;
+		bool PlayerHasRightObject;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class APlayerPistol* myRightPlayerPistol;
+		bool PlayerHasLeftObject;
 
 	class UPlayerAnim* LeftHandInstance;
 	class UPlayerAnim* RightHandInstance;
@@ -92,16 +86,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		EPlayerWeapon GetPlayerWeapon();
-
-	UFUNCTION(BlueprintCallable)
-		void SetPlayerLeftPistol(UActorComponent* myPistol);
-
-	UFUNCTION(BlueprintCallable)
-		void SetPlayerRightPistol(UActorComponent* myPistol);
-
-	UFUNCTION(BlueprintCallable)
-		void SetRightIsNotWeapon();
-
-	UFUNCTION(BlueprintCallable)
-		void SetLeftIsNotWeapon();
 };

@@ -18,7 +18,7 @@ public:
 	UPROPERTY()
 		int nPistolMagazine;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool IsControlling;
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
