@@ -15,7 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	APlayerPistol();
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int nPistolMagazine;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

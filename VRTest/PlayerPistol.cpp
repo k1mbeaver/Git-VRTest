@@ -42,16 +42,7 @@ void APlayerPistol::PlayerShot()
 	
 	else
 	{
-		if (ProjectileClass != nullptr)
-		{
-			UWorld* const World = GetWorld();
-
-			if (World != nullptr)
-			{
-
-			}
-		}
-		nPistolMagazine--;
+		nPistolMagazine -= 1;
 	}
 }
 
