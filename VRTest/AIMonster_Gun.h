@@ -15,6 +15,9 @@ public:
 	// Sets default values for this character's properties
 	AAIMonster_Gun();
 
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Speed, Meta = (AllowPrivateAccess = true))
+		float MonsterSpeed;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

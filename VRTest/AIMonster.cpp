@@ -15,14 +15,13 @@ AAIMonster::AAIMonster()
 	PrimaryActorTick.bCanEverTick = true;
 
 	GetCharacterMovement()->JumpZVelocity = 400.0f;
-	//GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 
 	// 캐릭터가 자연스럽게 회전하게 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectPunchMonster"));
 
 	MonsterSpeed = 300.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
