@@ -21,7 +21,7 @@ AAIMonster_Gun::AAIMonster_Gun()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectGunMonster"));
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
 	MonsterSpeed = 200.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 

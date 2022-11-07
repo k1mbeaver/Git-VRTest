@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
 #include "DrawDebugHelpers.h"
+#include "AIAnimInstance.h"
+#include "MyAIController.h"
 
 // Sets default values
 AAIMonster::AAIMonster()
@@ -21,7 +23,7 @@ AAIMonster::AAIMonster()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectPunchMonster"));
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
 	MonsterSpeed = 300.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
@@ -33,6 +35,8 @@ void AAIMonster::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
+	MonsterController = Cast<AMyAIController>(GetController());
 }
 
 // Called every frame
@@ -49,3 +53,8 @@ void AAIMonster::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
+void AAIMonster::MonsterDead()
+{
+	MonsterAnimation->SetDeadAnim();
+	MonsterController->StopAI();
+}
