@@ -57,4 +57,9 @@ void AAIMonster::MonsterDead()
 {
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
+
+	// 몬스터 들이 쓰러지면 충돌 X
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 }
