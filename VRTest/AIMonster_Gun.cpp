@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
 #include "DrawDebugHelpers.h"
+#include "AIAnimInstance.h"
+#include "MyAIController_Gun.h"
 
 // Sets default values
 AAIMonster_Gun::AAIMonster_Gun()
@@ -33,6 +35,8 @@ void AAIMonster_Gun::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
+	MonsterController = Cast<AMyAIController_Gun>(GetController());
 }
 
 // Called every frame
@@ -49,3 +53,13 @@ void AAIMonster_Gun::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
+void AAIMonster_Gun::MonsterDead()
+{
+	MonsterAnimation->SetDeadAnim();
+	MonsterController->StopAI();
+
+	// 몬스터 들이 쓰러지면 충돌 X
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+}
