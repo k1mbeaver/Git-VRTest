@@ -36,6 +36,7 @@ void AMyAIController_Gun::BeginPlay()
 	AMyCharacter* myPlayerCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 
 	GetBlackboardComponent()->SetValueAsObject(AMyAIController_Gun::TargetKey, myPlayerCharacter);
+	//GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, 0);
 }
 
 void AMyAIController_Gun::OnPossess(APawn* InPawn)

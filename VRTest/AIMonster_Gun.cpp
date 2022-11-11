@@ -4,11 +4,15 @@
 #include "AIMonster_Gun.h"
 #include "GameFrameWork/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
 #include "DrawDebugHelpers.h"
 #include "AIAnimInstance.h"
 #include "MyAIController_Gun.h"
+#include "PlayerProjectile.h"
+#include "Particles/ParticleSystem.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AAIMonster_Gun::AAIMonster_Gun()
@@ -24,6 +28,9 @@ AAIMonster_Gun::AAIMonster_Gun()
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
+
+	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
+	MuzzleLocation->SetupAttachment(GetCapsuleComponent());
 
 	MonsterSpeed = 200.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
@@ -62,4 +69,30 @@ void AAIMonster_Gun::MonsterDead()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+}
+
+void AAIMonster_Gun::MonsterPistolShot()
+{
+	GameStatic->SpawnEmitterAttached(AttackParticle, MuzzleLocation, FName("MuzzleLocatiom"));
+
+	// try and fire a projectile
+	if (ProjectileClass != nullptr)
+	{
+		UWorld* const World = GetWorld();
+
+		if (World != nullptr)
+		{
+			const FRotator SpawnRotation = GetControlRotation();
+			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
+
+			// + SpawnRotation.RotateVector(GunOffset)
+			//Set Spawn Collision Handling Override
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+			// spawn the projectile at the muzzle
+			World->SpawnActor<APlayerProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+		}
+	}
 }

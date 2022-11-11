@@ -18,8 +18,15 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Speed, Meta = (AllowPrivateAccess = true))
 		float MonsterSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+		UAnimMontage* AttackMontage;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+		bool IsAttacking;
+
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController* MonsterController;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,4 +41,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void MonsterDead();
+
+	UFUNCTION(BlueprintCallable)
+		void MonsterPunch();
+
+	UFUNCTION(BlueprintCallable)
+		void MonsterPunchEnd();
 };

@@ -28,6 +28,8 @@ AAIMonster::AAIMonster()
 	MonsterSpeed = 300.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
 	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
+
+	IsAttacking = false;
 }
 
 // Called when the game starts or when spawned
@@ -37,6 +39,9 @@ void AAIMonster::BeginPlay()
 	
 	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
 	MonsterController = Cast<AMyAIController>(GetController());
+
+	//MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
+	MonsterAnimation->AttackEnd_Attack.AddUObject(this, &AAIMonster::MonsterPunchEnd);
 }
 
 // Called every frame
@@ -62,4 +67,22 @@ void AAIMonster::MonsterDead()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+}
+
+void AAIMonster::MonsterPunch()
+{
+	if (!IsAttacking)
+	{
+		IsAttacking = true;
+
+		auto AnimInstance = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
+		if (nullptr == AnimInstance) return;
+
+		AnimInstance->PlayAttackMontage(AttackMontage);
+	}
+}
+
+void AAIMonster::MonsterPunchEnd()
+{
+	IsAttacking = false;
 }

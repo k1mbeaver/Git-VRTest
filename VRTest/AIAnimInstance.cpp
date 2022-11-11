@@ -11,6 +11,7 @@ UAIAnimInstance::UAIAnimInstance()
 	CurrentPawnSpeed = 0.0f;
 	IsInAir = false;
 	IsDead = false;
+	IsAttacking = false;
 }
 
 void UAIAnimInstance::NativeBeginPlay()
@@ -39,4 +40,19 @@ void UAIAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 void UAIAnimInstance::SetDeadAnim()
 {
 	IsDead = true;
+}
+
+void UAIAnimInstance::PlayAttackMontage(UAnimMontage* GetAttackMontage)
+{
+	Montage_Play(GetAttackMontage, 1.0f);
+}
+
+void UAIAnimInstance::AnimNotify_AttackCheck()
+{
+	AttackCheck_Attack.Broadcast();
+}
+
+void UAIAnimInstance::AnimNotify_AttackEnd()
+{
+	AttackEnd_Attack.Broadcast();
 }

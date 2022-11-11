@@ -19,7 +19,7 @@ EBTNodeResult::Type UBTTask_Punch::ExecuteTask(UBehaviorTreeComponent& OwnerComp
     if (MyAICharacter == nullptr)
         return EBTNodeResult::Failed;
 
-    //MyAICharacter->Attack();
+    MyAICharacter->MonsterPunch();
     IsAttacking = true;
     //MyAICharacter->OnAttackEnd.AddLambda([this]() -> void {
         //IsAttacking = false;

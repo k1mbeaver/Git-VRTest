@@ -19,8 +19,8 @@ EBTNodeResult::Type UBTTask_PistolShot::ExecuteTask(UBehaviorTreeComponent& Owne
     if (MyAICharacter == nullptr)
         return EBTNodeResult::Failed;
 
-    //MyAICharacter->Attack();
-    IsAttacking = true;
+    MyAICharacter->MonsterPistolShot();
+   // IsAttacking = true;
     //MyAICharacter->OnAttackEnd.AddLambda([this]() -> void {
         //IsAttacking = false;
         //});

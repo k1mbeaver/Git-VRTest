@@ -21,6 +21,20 @@ public:
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController_Gun* MonsterController;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		USceneComponent* MuzzleLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		class UParticleSystem* AttackParticle;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class APlayerProjectile> ProjectileClass;
+
+	UPROPERTY()
+		class UGameplayStatics* GameStatic;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,4 +48,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void MonsterDead();
+
+	UFUNCTION(BlueprintCallable)
+		void MonsterPistolShot();
 };
