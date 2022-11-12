@@ -73,7 +73,8 @@ void AAIMonster_Gun::MonsterDead()
 
 void AAIMonster_Gun::MonsterPistolShot()
 {
-	GameStatic->SpawnEmitterAttached(AttackParticle, MuzzleLocation, FName("MuzzleLocatiom"));
+	GameStatic->SpawnEmitterAttached(AttackParticle, MuzzleLocation, FName("MuzzleLocatiom")); // 파티클 출력
+	UGameplayStatics::PlaySoundAtLocation(this, AttackSound, MuzzleLocation->GetComponentLocation()); // 사운드 출력
 
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)

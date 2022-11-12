@@ -22,7 +22,8 @@ public:
 	class UBlackboardComponent* get_blackboard() const;
 
 	static const FName TargetKey;
-	//static const FName PistolShot;
+	static const FName PistolShot;
+	static const FName CanShot;
 
 	void RunAI();
 	void StopAI();

@@ -13,6 +13,8 @@
 #include "AIMonster_Gun.h"
 
 const FName AMyAIController_Gun::TargetKey(TEXT("Target"));
+const FName AMyAIController_Gun::PistolShot(TEXT("Shot"));
+const FName AMyAIController_Gun::CanShot(TEXT("CanShot"));
 
 AMyAIController_Gun::AMyAIController_Gun(FObjectInitializer const& object_initializer)
 {
@@ -36,7 +38,8 @@ void AMyAIController_Gun::BeginPlay()
 	AMyCharacter* myPlayerCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 
 	GetBlackboardComponent()->SetValueAsObject(AMyAIController_Gun::TargetKey, myPlayerCharacter);
-	//GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, 0);
+	GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, 0);
+	GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, false);
 }
 
 void AMyAIController_Gun::OnPossess(APawn* InPawn)

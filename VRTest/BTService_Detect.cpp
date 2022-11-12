@@ -23,9 +23,14 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
     if (nullptr == ControllingPawn)
         return;
 
-   //int FrameShot = OwnerComp.GetBlackboardComponent()->GetValueAsInt(AMyAIController_Gun::PistolShot);
+    int FrameShot = OwnerComp.GetBlackboardComponent()->GetValueAsInt(AMyAIController_Gun::PistolShot);
 
-  // OwnerComp.GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, ++FrameShot);
+    OwnerComp.GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, ++FrameShot);
+
+    if (FrameShot >= 20)
+    {
+        OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, true);
+    }
     /*
     TArray<FOverlapResult> OverlapResults;
     FCollisionQueryParams CollisionQueryParam(NAME_None, false, ControllingPawn);
