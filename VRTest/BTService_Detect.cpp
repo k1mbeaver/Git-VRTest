@@ -19,18 +19,18 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 {
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
+    /*
+    if (OwnerComp.GetBlackboardComponent()->GetValueAsBool(AMyAIController_Gun::CanShot) == true)
+    {
+        OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, false);
+        return;
+    }
+    */
+
     APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
     if (nullptr == ControllingPawn)
         return;
-
-    int FrameShot = OwnerComp.GetBlackboardComponent()->GetValueAsInt(AMyAIController_Gun::PistolShot);
-
-    OwnerComp.GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, ++FrameShot);
-
-    if (FrameShot >= 20)
-    {
-        OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, true);
-    }
+   
     /*
     TArray<FOverlapResult> OverlapResults;
     FCollisionQueryParams CollisionQueryParam(NAME_None, false, ControllingPawn);
@@ -58,7 +58,21 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
             }
         }
     }
+    
     DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
     */
+
+    int FrameShot = OwnerComp.GetBlackboardComponent()->GetValueAsInt(AMyAIController_Gun::PistolShot);
+
+    FrameShot = FrameShot + 1;
+
+    OwnerComp.GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, FrameShot);
+
+    if (FrameShot >= 5)
+    {
+        OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, true);
+        OwnerComp.GetBlackboardComponent()->SetValueAsInt(AMyAIController_Gun::PistolShot, 0);
+    }
 }
 
+ 
