@@ -29,6 +29,8 @@ class VRTEST_API UAIAnimInstance : public UAnimInstance
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool IsDead;
 
+public:
+
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 		bool IsAttacking;
 
@@ -44,4 +46,5 @@ public:
 
 	FAttackCheck_AttackDelegate AttackCheck_Attack;
 	FAttackEnd_AttackDelegate AttackEnd_Attack;
+
 };

@@ -79,10 +79,15 @@ void AAIMonster::MonsterPunch()
 		if (nullptr == AnimInstance) return;
 
 		AnimInstance->PlayAttackMontage(AttackMontage);
+		AnimInstance->IsAttacking = true;
 	}
 }
 
 void AAIMonster::MonsterPunchEnd()
 {
+	auto AnimInstance = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
+	if (nullptr == AnimInstance) return;
+
 	IsAttacking = false;
+	AnimInstance->IsAttacking = false;
 }
