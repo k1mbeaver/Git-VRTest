@@ -41,8 +41,6 @@ void AMyCharacter::BeginPlay()
 	
 	LeftHandInstance = Cast<UPlayerAnim>(MeshLeft->GetAnimInstance());
 	RightHandInstance = Cast<UPlayerAnim>(MeshRight->GetAnimInstance());
-
-	GetWorldSettings()->SetTimeDilation(1.0f);
 }
 
 // Called every frame
