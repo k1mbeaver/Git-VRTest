@@ -132,3 +132,8 @@ EPlayerWeapon AMyCharacter::GetPlayerWeapon()
 {
 	return PlayerWeapon;
 }
+
+void AMyCharacter::PlayerDead()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("PlayerDead"));
+}

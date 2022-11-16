@@ -86,4 +86,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		EPlayerWeapon GetPlayerWeapon();
+
+	UFUNCTION(BlueprintCallable)
+		void PlayerDead();
 };
