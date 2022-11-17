@@ -24,6 +24,8 @@ EBTNodeResult::Type UBTTask_TurnToTarget_Gun::ExecuteTask(UBehaviorTreeComponent
     if (nullptr == Target)
         return EBTNodeResult::Failed;
 
+    // Gun AI의 경우에는 총구 방향이 캐릭터에게 향하도록 하자
+
     FVector LookVector = Target->GetActorLocation() - MyAI->GetActorLocation();
     LookVector.Z = 0.0f;
     FRotator TargetRot = FRotationMatrix::MakeFromX(LookVector).Rotator();
