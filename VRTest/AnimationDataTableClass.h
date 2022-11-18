@@ -5,30 +5,30 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/DataTable.h"
-#include "AIDataTableClass.generated.h"
+#include "AnimationDataTableClass.generated.h"
 
 USTRUCT(BlueprintType)
-struct FAIDataTable : public FTableRowBase
+struct FAnimationDataTable : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float AICharacterSpeed;
+		UAnimMontage* MyMontage;
 
+	// 애니메이션
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FString AICharacterType;
+		TSubclassOf<class UAnimInstance> MyAnimation;
 };
 
-
 UCLASS()
-class VRTEST_API AAIDataTableClass : public AActor
+class VRTEST_API AAnimationDataTableClass : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAIDataTableClass();
+	AAnimationDataTableClass();
 
 protected:
 	// Called when the game starts or when spawned

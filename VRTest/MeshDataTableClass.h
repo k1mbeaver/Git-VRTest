@@ -5,30 +5,26 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/DataTable.h"
-#include "AIDataTableClass.generated.h"
+#include "MeshDataTableClass.generated.h"
 
 USTRUCT(BlueprintType)
-struct FAIDataTable : public FTableRowBase
+struct FMeshDataTable : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float AICharacterSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FString AICharacterType;
+		USkeletalMesh* MySkeletalMesh;
 };
 
-
 UCLASS()
-class VRTEST_API AAIDataTableClass : public AActor
+class VRTEST_API AMeshDataTableClass : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAIDataTableClass();
+	AMeshDataTableClass();
 
 protected:
 	// Called when the game starts or when spawned
