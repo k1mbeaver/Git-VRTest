@@ -13,6 +13,7 @@
 #include "PlayerProjectile.h"
 #include "Particles/ParticleSystem.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 AAIMonster_Gun::AAIMonster_Gun()
@@ -44,6 +45,10 @@ void AAIMonster_Gun::BeginPlay()
 	
 	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
 	MonsterController = Cast<AMyAIController_Gun>(GetController());
+
+	MonsterSpeed = MyGameInstance->GetAISpeed("GunAI");
+	AttackParticle = MyGameInstance->GetParticle("AIShot");
+	AttackSound = MyGameInstance->GetSound("AIShot");
 }
 
 // Called every frame

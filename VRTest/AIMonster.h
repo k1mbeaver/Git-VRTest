@@ -26,7 +26,7 @@ public:
 
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController* MonsterController;
-
+	class UMyGameInstance* MyGameInstance;
 
 protected:
 	// Called when the game starts or when spawned

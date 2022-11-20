@@ -9,6 +9,7 @@
 #include "DrawDebugHelpers.h"
 #include "AIAnimInstance.h"
 #include "MyAIController.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 AAIMonster::AAIMonster()
@@ -25,8 +26,6 @@ AAIMonster::AAIMonster()
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
-	MonsterSpeed = 300.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
-
 	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
 
 	IsAttacking = false;
@@ -39,6 +38,9 @@ void AAIMonster::BeginPlay()
 	
 	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
 	MonsterController = Cast<AMyAIController>(GetController());
+
+	AttackMontage = MyGameInstance->GetMontage("AIAnimation");
+	MonsterSpeed = MyGameInstance->GetAISpeed("PunchAI");
 
 	//MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 	MonsterAnimation->AttackEnd_Attack.AddUObject(this, &AAIMonster::MonsterPunchEnd);
