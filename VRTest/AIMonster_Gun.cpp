@@ -43,6 +43,8 @@ void AAIMonster_Gun::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+
 	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
 	MonsterController = Cast<AMyAIController_Gun>(GetController());
 

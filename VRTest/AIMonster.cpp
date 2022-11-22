@@ -35,12 +35,16 @@ AAIMonster::AAIMonster()
 void AAIMonster::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	
 	MonsterAnimation = Cast<UAIAnimInstance>(GetMesh()->GetAnimInstance());
 	MonsterController = Cast<AMyAIController>(GetController());
 
 	AttackMontage = MyGameInstance->GetMontage("AIAnimation");
 	MonsterSpeed = MyGameInstance->GetAISpeed("PunchAI");
+
+	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
 
 	//MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 	MonsterAnimation->AttackEnd_Attack.AddUObject(this, &AAIMonster::MonsterPunchEnd);
