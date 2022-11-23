@@ -7,7 +7,9 @@
 #include "MotionControllerComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ActorComponent.h"
+#include "MyGameInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -32,15 +34,22 @@ AMyCharacter::AMyCharacter()
 
 	IsRightGrip = false;
 	IsLeftGrip = false;
+
+	CurrentMonsterKill = 0;
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	
 	LeftHandInstance = Cast<UPlayerAnim>(MeshLeft->GetAnimInstance());
 	RightHandInstance = Cast<UPlayerAnim>(MeshRight->GetAnimInstance());
+
+	PlayerStage = MyGameInstance->GetPlayerStage("Player");
+	TotalMonsterKill = MyGameInstance->GetAICount(PlayerStage);
 }
 
 // Called every frame
@@ -148,4 +157,18 @@ void AMyCharacter::PlayerDead()
 	if (PlayerController != nullptr) return;
 
 	PlayerController->ConsoleCommand("quit");
+}
+
+void AMyCharacter::KillingMonster()
+{
+	CurrentMonsterKill++;
+
+	if (CurrentMonsterKill == TotalMonsterKill)
+	{
+		FName fnMapName = FName(MyGameInstance->GetNextMapName(PlayerStage));
+
+		MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
+
+		UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
+	}
 }

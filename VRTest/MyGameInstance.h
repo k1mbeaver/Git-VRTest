@@ -11,6 +11,7 @@ struct FParticleDataTable;
 struct FAnimationDataTable;
 struct FSoundDataTable;
 struct FAIDataTable;
+struct FMapDataTable;
 
 class UDataTable;
 /**
@@ -43,6 +44,11 @@ public:
 	// AI 정보 얻어오기
 	float GetAISpeed(FString AIType);
 	FString GetAIType(FString AIType);
+
+	// Map 정보 얻어오기
+	int GetAICount(int MapType);
+	FString GetMapName(int MapType);
+	FString GetNextMapName(int MapType);
 	
 private:
 	UPROPERTY()
@@ -59,5 +65,8 @@ private:
 
 	UPROPERTY()
 		UDataTable* FAIFileTable;
+
+	UPROPERTY()
+		UDataTable* FMapFileTable;
 
 };

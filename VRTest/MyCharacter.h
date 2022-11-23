@@ -27,6 +27,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	int TotalMonsterKill;
+	int CurrentMonsterKill;
+	int PlayerStage;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -63,6 +68,9 @@ public:
 	class UPlayerAnim* LeftHandInstance;
 	class UPlayerAnim* RightHandInstance;
 
+	class UMyGameInstance* MyGameInstance;
+
+
 	UFUNCTION(BlueprintCallable)
 	void PressedLeftGrip();
 
@@ -89,4 +97,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PlayerDead();
+
+	// 몬스터를 킬했을 시에 호출하는 함수
+	UFUNCTION(BlueprintCallable)
+		void KillingMonster();
 };

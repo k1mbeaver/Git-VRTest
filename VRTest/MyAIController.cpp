@@ -65,5 +65,8 @@ void AMyAIController::StopAI()
 		return;
 	}
 
+	AMyCharacter* myPlayerCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
+	myPlayerCharacter->KillingMonster();
+
 	BTAsset_Component->StopTree(EBTStopMode::Safe);
 }

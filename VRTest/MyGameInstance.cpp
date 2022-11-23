@@ -7,6 +7,7 @@
 #include "ParticleDataTableClass.h"
 #include "AnimationDataTableClass.h"
 #include "AIDataTableClass.h"
+#include "MapDataTableClass.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -53,6 +54,15 @@ UMyGameInstance::UMyGameInstance()
 	if (DT_MYAIFILE.Succeeded())
 	{
 		FAIFileTable = DT_MYAIFILE.Object;
+	}
+
+	FString MapFileDataPath = TEXT("DataTable'/Game/DataTable/MapDataTable.MapDataTable'");
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYMAPFILE(*MapFileDataPath);
+
+	if (DT_MYMAPFILE.Succeeded())
+	{
+		FMapFileTable = DT_MYMAPFILE.Object;
 	}
 }
 
@@ -122,4 +132,28 @@ FString UMyGameInstance::GetAIType(FString AIType)
 	FAIDataTable* AIData = FAIFileTable->FindRow<FAIDataTable>(*AIType, TEXT(""));
 	FString GetAIType = AIData->AICharacterType;
 	return GetAIType;
+}
+
+int UMyGameInstance::GetAICount(int MapType)
+{
+	FString strMapType = FString::FromInt(MapType);
+	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
+	int GetAICount = MapData->CountAI;
+	return GetAICount;
+}
+
+FString UMyGameInstance::GetMapName(int MapType)
+{
+	FString strMapType = FString::FromInt(MapType);
+	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
+	FString GetMapName = MapData->MapName;
+	return GetMapName;
+}
+
+FString UMyGameInstance::GetNextMapName(int MapType)
+{
+	FString strMapType = FString::FromInt(MapType);
+	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
+	FString GetNextMapName = MapData->NextMapName;
+	return GetNextMapName;
 }
