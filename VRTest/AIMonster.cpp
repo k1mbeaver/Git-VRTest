@@ -9,6 +9,7 @@
 #include "DrawDebugHelpers.h"
 #include "AIAnimInstance.h"
 #include "MyAIController.h"
+#include "MyCharacter.h"
 #include "MyGameInstance.h"
 
 // Sets default values
@@ -27,6 +28,9 @@ AAIMonster::AAIMonster()
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
 	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
+
+	AttackRange = 250.0f;
+	AttackRadius = 50.0f;
 
 	IsAttacking = false;
 }
@@ -48,6 +52,7 @@ void AAIMonster::BeginPlay()
 
 	//MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 	MonsterAnimation->AttackEnd_Attack.AddUObject(this, &AAIMonster::MonsterPunchEnd);
+	MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 }
 
 // Called every frame
@@ -96,4 +101,52 @@ void AAIMonster::MonsterPunchEnd()
 
 	IsAttacking = false;
 	AnimInstance->IsAttacking = false;
+}
+
+void AAIMonster::AttackCheck()
+{
+	FHitResult HitResult;
+	FCollisionQueryParams Params(NAME_None, false, this);
+	bool bResult = GetWorld()->SweepSingleByChannel(
+		HitResult,
+		GetActorLocation(),
+		GetActorLocation() + GetActorForwardVector() * AttackRange,
+		FQuat::Identity,
+		ECollisionChannel::ECC_GameTraceChannel1, // Attack 채널 player의 경우에만 충돌 한다
+		FCollisionShape::MakeSphere(AttackRadius),
+		Params);
+
+	#if ENABLE_DRAW_DEBUG
+		FVector TraceVec = GetActorForwardVector() * AttackRange;
+		FVector Center = GetActorLocation() + TraceVec * 0.5f;
+		float HalfHeight = AttackRange * 0.5f + AttackRadius;
+		FQuat CapsuleRot = FRotationMatrix::MakeFromZ(TraceVec).ToQuat();
+		FColor DrawColor = bResult ? FColor::Green : FColor::Red;
+		float DebugLifeTime = 5.0f;
+
+		// 이거는 에디터에서만 사용하는거
+		DrawDebugCapsule(GetWorld(),
+			Center,
+			HalfHeight,
+			AttackRadius,
+			CapsuleRot,
+			DrawColor,
+			false,
+			DebugLifeTime);
+		
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterAttack!")); // 플레이어가 펀치하는지 확인용
+
+	#endif
+
+
+	if (bResult)
+	{
+		if (HitResult.Actor.IsValid())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Hit!"));
+			FDamageEvent DamageEvent;
+			AMyCharacter* HitCharacter = Cast<AMyCharacter>(HitResult.Actor);
+			HitCharacter->PlayerDead();
+		}
+	}
 }

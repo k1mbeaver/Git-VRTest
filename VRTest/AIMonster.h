@@ -24,6 +24,12 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		bool IsAttacking;
 
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+		float AttackRange;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+		float AttackRadius;
+
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController* MonsterController;
 	class UMyGameInstance* MyGameInstance;
@@ -47,4 +53,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void MonsterPunchEnd();
+
+	UFUNCTION(BlueprintCallable)
+		void AttackCheck();
 };
