@@ -7,11 +7,11 @@
 #include "MyCharacter.generated.h"
 
 UENUM(BlueprintType)
-enum class EPlayerWeapon : uint8
+enum class EMyPlayerState : uint8
 {
-	E_Punch = 0 UMETA(DisplayName = "Punch"),
-	E_Pistol = 1 UMETA(DisplayName = "Pistol"),
-	E_Object = 2 UMETA(DisplayName = "Object"),
+	E_Start = 0 UMETA(DisplayName = "Start"),
+	E_Ready = 1 UMETA(DisplayName = "Ready"),
+	E_Play = 2 UMETA(DisplayName = "Play"),
 };
 
 UCLASS()
@@ -55,9 +55,9 @@ public:
 	bool IsRightGrip;
 	bool IsLeftGrip;
 
-	// 플레이어의 현재 공격 무기 (주먹, 총, 물체)
+	// 현재 플레이어의 상태 (시작화면, 준비화면, 플레이)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EPlayerWeapon PlayerWeapon;
+		EMyPlayerState MyPlayerState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool PlayerHasRightObject;
@@ -90,15 +90,17 @@ public:
 		void SetIsLeftGrip();
 
 	UFUNCTION(BlueprintCallable)
-		void SetPlayerWeapon(EPlayerWeapon myPlayerWeapon);
-
-	UFUNCTION(BlueprintCallable)
-		EPlayerWeapon GetPlayerWeapon();
-
-	UFUNCTION(BlueprintCallable)
 		void PlayerDead();
 
 	// 몬스터를 킬했을 시에 호출하는 함수
 	UFUNCTION(BlueprintCallable)
 		void KillingMonster();
+
+	// 플레이어가 게임 중인지 아닌지 확인하는 함수
+	UFUNCTION(BlueprintCallable)
+		bool PlayerPlaying();
+
+	// 플레이어의 게임 Start
+	UFUNCTION(BlueprintCallable)
+		void PlayerGameStart();
 };
