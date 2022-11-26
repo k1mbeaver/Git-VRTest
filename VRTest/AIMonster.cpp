@@ -74,7 +74,7 @@ void AAIMonster::MonsterDead()
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
 
-	// 몬스터 들이 쓰러지면 충돌 X
+	// 몬스터 들이 쓰러지면 충돌 X, 여기서 몬스터의 모든 콜리전을 땅빼고 무시로 바꾸기
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
@@ -101,10 +101,15 @@ void AAIMonster::MonsterPunchEnd()
 
 	IsAttacking = false;
 	AnimInstance->IsAttacking = false;
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickEnd!"));
 }
 
 void AAIMonster::AttackCheck()
 {
+	//KickCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Block);
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickStart!"));
+	/*
 	FHitResult HitResult;
 	FCollisionQueryParams Params(NAME_None, false, this);
 	bool bResult = GetWorld()->SweepSingleByChannel(
@@ -112,7 +117,7 @@ void AAIMonster::AttackCheck()
 		GetActorLocation(),
 		GetActorLocation() + GetActorForwardVector() * AttackRange,
 		FQuat::Identity,
-		ECollisionChannel::ECC_GameTraceChannel1, // Attack 채널 player의 경우에만 충돌 한다
+		ECollisionChannel::ECC_GameTraceChannel2, // Monster의 Attack 채널
 		FCollisionShape::MakeSphere(AttackRadius),
 		Params);
 
@@ -144,9 +149,10 @@ void AAIMonster::AttackCheck()
 		if (HitResult.Actor.IsValid())
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Hit!"));
-			FDamageEvent DamageEvent;
-			AMyCharacter* HitCharacter = Cast<AMyCharacter>(HitResult.Actor);
-			HitCharacter->PlayerDead();
+			//FDamageEvent DamageEvent;
+			//AMyCharacter* HitCharacter = Cast<AMyCharacter>(HitResult.Actor);
+			//HitCharacter->PlayerDead();
 		}
 	}
+	*/
 }

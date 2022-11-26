@@ -156,23 +156,10 @@ void AMyCharacter::SetIsLeftGrip()
 void AMyCharacter::PlayerDead()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("PlayerDead"));
-	
-	// 정확히 말하자면 서버에서 나간다기 보다는 아래맵으로 탈출한다는 개념이 더 정확홤
-	// PlayerController->ClientTravel("/Game/MenuSystem/MainMenu", ETravelType::TRAVEL_Absolute);
 
 	MyGameInstance->SetPlayerStage("Player", 1);
 	
 	UGameplayStatics::OpenLevel(GetWorld(), "ReadyMap");
-	/*
-	UWorld* World = GetWorld();
-	if (World != nullptr) return;
-
-	APlayerController* PlayerController = World->GetFirstPlayerController();
-
-	if (PlayerController != nullptr) return;
-
-	PlayerController->ConsoleCommand("quit");
-	*/
 }
 
 void AMyCharacter::KillingMonster()
