@@ -74,10 +74,12 @@ void AAIMonster::MonsterDead()
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
 
-	// 몬스터 들이 쓰러지면 충돌 X, 여기서 몬스터의 모든 콜리전을 땅빼고 무시로 바꾸기
+	// 몬스터 들이 쓰러지면 충돌 X, 여기서 몬스터의 모든 콜리전을 땅빼고 무시로 바꾸기 블루프린트로 진행한다.
+	/*
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	*/
 }
 
 void AAIMonster::MonsterPunch()
