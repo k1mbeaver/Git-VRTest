@@ -18,6 +18,7 @@ void AReadyObject::BeginPlay()
 {
 	Super::BeginPlay();
 
+	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 }
 
 // Called every frame
@@ -29,6 +30,8 @@ void AReadyObject::Tick(float DeltaTime)
 
 void AReadyObject::StartStage()
 {
+	MyGameInstance->SetPlayerStage("Player", MyGameInstance->GetPlayerStage("Player") + 1);
+
 	UGameplayStatics::OpenLevel(GetWorld(), "Tutorial");
 }
 

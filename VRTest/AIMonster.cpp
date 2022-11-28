@@ -73,13 +73,6 @@ void AAIMonster::MonsterDead()
 {
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
-
-	// 몬스터 들이 쓰러지면 충돌 X, 여기서 몬스터의 모든 콜리전을 땅빼고 무시로 바꾸기 블루프린트로 진행한다.
-	/*
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
-	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
-	*/
 }
 
 void AAIMonster::MonsterPunch()
@@ -104,57 +97,14 @@ void AAIMonster::MonsterPunchEnd()
 	IsAttacking = false;
 	AnimInstance->IsAttacking = false;
 
+	// 여기서 콜리전 비활성화
+	//GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Ignore);
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickEnd!"));
 }
 
 void AAIMonster::AttackCheck()
 {
-	//KickCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Block);
+	// 여기서 콜리전 활성화
+	//GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Block);
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickStart!"));
-	/*
-	FHitResult HitResult;
-	FCollisionQueryParams Params(NAME_None, false, this);
-	bool bResult = GetWorld()->SweepSingleByChannel(
-		HitResult,
-		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * AttackRange,
-		FQuat::Identity,
-		ECollisionChannel::ECC_GameTraceChannel2, // Monster의 Attack 채널
-		FCollisionShape::MakeSphere(AttackRadius),
-		Params);
-
-	#if ENABLE_DRAW_DEBUG
-		FVector TraceVec = GetActorForwardVector() * AttackRange;
-		FVector Center = GetActorLocation() + TraceVec * 0.5f;
-		float HalfHeight = AttackRange * 0.5f + AttackRadius;
-		FQuat CapsuleRot = FRotationMatrix::MakeFromZ(TraceVec).ToQuat();
-		FColor DrawColor = bResult ? FColor::Green : FColor::Red;
-		float DebugLifeTime = 5.0f;
-
-		// 이거는 에디터에서만 사용하는거
-		DrawDebugCapsule(GetWorld(),
-			Center,
-			HalfHeight,
-			AttackRadius,
-			CapsuleRot,
-			DrawColor,
-			false,
-			DebugLifeTime);
-		
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterAttack!")); // 플레이어가 펀치하는지 확인용
-
-	#endif
-
-
-	if (bResult)
-	{
-		if (HitResult.Actor.IsValid())
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Hit!"));
-			//FDamageEvent DamageEvent;
-			//AMyCharacter* HitCharacter = Cast<AMyCharacter>(HitResult.Actor);
-			//HitCharacter->PlayerDead();
-		}
-	}
-	*/
 }
