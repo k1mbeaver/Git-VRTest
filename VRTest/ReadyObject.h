@@ -17,6 +17,12 @@ public:
 
 	class UMyGameInstance* MyGameInstance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+		USoundWave* BreakObjectSound;
+
+private:
+	int PlayerStage;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

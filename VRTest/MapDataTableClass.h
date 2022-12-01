@@ -17,10 +17,10 @@ public:
 		int CountAI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FString MapName;
+		FName MapName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FString NextMapName;
+		FName NextMapName;
 };
 
 UCLASS()

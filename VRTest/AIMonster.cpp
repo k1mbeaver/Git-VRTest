@@ -47,6 +47,7 @@ void AAIMonster::BeginPlay()
 
 	AttackMontage = MyGameInstance->GetMontage("AIAnimation");
 	MonsterSpeed = MyGameInstance->GetAISpeed("PunchAI");
+	BreakAISound = MyGameInstance->GetSound("BreakAISound");
 
 	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
 

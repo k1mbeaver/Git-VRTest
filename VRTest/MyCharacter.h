@@ -51,9 +51,18 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class USkeletalMeshComponent* MeshRight;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
+		class AReadyObject* MyReadyObject;
+
 
 	bool IsRightGrip;
 	bool IsLeftGrip;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+		USoundWave* StartVRSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+		USoundWave* StageChangeSound;
 
 	// 현재 플레이어의 상태 (시작화면, 준비화면, 플레이)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -64,6 +73,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool PlayerHasLeftObject;
+
+	UPROPERTY()
+		class UGameplayStatics* GameStatic;
 
 	class UPlayerAnim* LeftHandInstance;
 	class UPlayerAnim* RightHandInstance;
@@ -103,4 +115,13 @@ public:
 	// 플레이어의 게임 Start
 	UFUNCTION(BlueprintCallable)
 		void PlayerGameStart();
+
+
+	// 이벤트
+	UFUNCTION(BlueprintNativeEvent)
+		void OnAllKillMonster();
+	virtual void OnAllKillMonster_Implementation()
+	{
+
+	}
 };

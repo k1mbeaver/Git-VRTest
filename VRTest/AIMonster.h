@@ -30,6 +30,9 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
 		float AttackRadius;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+		USoundWave* BreakAISound;
+
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController* MonsterController;
 	class UMyGameInstance* MyGameInstance;

@@ -51,6 +51,7 @@ void AAIMonster_Gun::BeginPlay()
 	MonsterSpeed = MyGameInstance->GetAISpeed("GunAI");
 	AttackParticle = MyGameInstance->GetParticle("AIShot");
 	AttackSound = MyGameInstance->GetSound("AIShot");
+	BreakAISound = MyGameInstance->GetSound("BreakAISound");
 }
 
 // Called every frame

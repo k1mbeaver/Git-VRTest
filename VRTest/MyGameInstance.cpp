@@ -142,18 +142,18 @@ int UMyGameInstance::GetAICount(int MapType)
 	return GetAICount;
 }
 
-FString UMyGameInstance::GetMapName(int MapType)
+FName UMyGameInstance::GetMapName(int MapType)
 {
 	FString strMapType = FString::FromInt(MapType);
 	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
-	FString GetMapName = MapData->MapName;
+	FName GetMapName = MapData->MapName;
 	return GetMapName;
 }
 
-FString UMyGameInstance::GetNextMapName(int MapType)
+FName UMyGameInstance::GetNextMapName(int MapType)
 {
 	FString strMapType = FString::FromInt(MapType);
 	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
-	FString GetNextMapName = MapData->NextMapName;
+	FName GetNextMapName = MapData->NextMapName;
 	return GetNextMapName;
 }

@@ -19,6 +19,9 @@ void AReadyObject::BeginPlay()
 	Super::BeginPlay();
 
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+
+	BreakObjectSound = MyGameInstance->GetSound("BreakObjectSound");
+	PlayerStage = MyGameInstance->GetPlayerStage("Player");
 }
 
 // Called every frame
@@ -30,8 +33,12 @@ void AReadyObject::Tick(float DeltaTime)
 
 void AReadyObject::StartStage()
 {
-	MyGameInstance->SetPlayerStage("Player", MyGameInstance->GetPlayerStage("Player") + 1);
+	PlayerStage = PlayerStage++;
+	MyGameInstance->SetPlayerStage("Player", PlayerStage);
+	FName fnMapName = MyGameInstance->GetMapName(PlayerStage);
 
-	UGameplayStatics::OpenLevel(GetWorld(), "Tutorial");
+	UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
+
+	//UGameplayStatics::OpenLevel(GetWorld(), "Tutorial");
 }
 

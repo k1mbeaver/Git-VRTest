@@ -33,6 +33,9 @@ public:
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		class USoundWave* AttackSound;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+			USoundWave* BreakAISound;
+
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class APlayerProjectile> ProjectileClass;

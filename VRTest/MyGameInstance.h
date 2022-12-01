@@ -47,8 +47,8 @@ public:
 
 	// Map 정보 얻어오기
 	int GetAICount(int MapType);
-	FString GetMapName(int MapType);
-	FString GetNextMapName(int MapType);
+	FName GetMapName(int MapType);
+	FName GetNextMapName(int MapType);
 	
 private:
 	UPROPERTY()

@@ -10,6 +10,7 @@
 #include "MyGameInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "ReadyObject.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -23,9 +24,11 @@ AMyCharacter::AMyCharacter()
 	MeshLeft = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHLEFT"));
 	MeshRight = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHRIGHT"));
 
+	//MyReadyObject = GetCapsuleComponent()->GetChildComponent(0);
+
 	MotionLeft->SetupAttachment(GetCapsuleComponent());
 	MotionRight->SetupAttachment(GetCapsuleComponent());
-
+	
 	MeshLeft->SetupAttachment(MotionLeft);
 	MeshRight->SetupAttachment(MotionRight);
 
@@ -56,6 +59,8 @@ void AMyCharacter::BeginPlay()
 
 	PlayerStage = MyGameInstance->GetPlayerStage("Player");
 	TotalMonsterKill = MyGameInstance->GetAICount(PlayerStage);
+	StartVRSound = MyGameInstance->GetSound("StartVRSound");
+	StageChangeSound = MyGameInstance->GetSound("StageChange");
 
 	if (PlayerStage == 0)
 	{
@@ -70,6 +75,7 @@ void AMyCharacter::BeginPlay()
 	else
 	{
 		MyPlayerState = EMyPlayerState::E_Play;
+		GameStatic->PlaySoundAtLocation(GetWorld(), StageChangeSound, GetActorLocation());
 	}
 }
 
@@ -168,11 +174,15 @@ void AMyCharacter::KillingMonster()
 
 	if (CurrentMonsterKill == TotalMonsterKill)
 	{
+		OnAllKillMonster();
+		MyGameInstance->SetPlayerStage("Player", MyGameInstance->GetPlayerStage("Player") + 1);
+		/*
 		FName fnMapName = FName(MyGameInstance->GetNextMapName(PlayerStage));
 
 		MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
 
 		UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
+		*/
 	}
 }
 
@@ -191,7 +201,7 @@ bool AMyCharacter::PlayerPlaying()
 
 void AMyCharacter::PlayerGameStart()
 {
-	FName fnMapName = FName(MyGameInstance->GetNextMapName(PlayerStage));
 	MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
-	UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
+	UGameplayStatics::OpenLevel(GetWorld(), "ReadyMap");
+	//UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
 }
