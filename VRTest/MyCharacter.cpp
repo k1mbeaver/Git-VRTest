@@ -77,6 +77,8 @@ void AMyCharacter::BeginPlay()
 		MyPlayerState = EMyPlayerState::E_Play;
 		GameStatic->PlaySoundAtLocation(GetWorld(), StageChangeSound, GetActorLocation());
 	}
+
+	GetWorldSettings()->SetTimeDilation(1.0f);
 }
 
 // Called every frame
