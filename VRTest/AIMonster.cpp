@@ -98,6 +98,8 @@ void AAIMonster::MonsterPunchEnd()
 	IsAttacking = false;
 	AnimInstance->IsAttacking = false;
 
+	OnAttackEnd.Broadcast();
+
 	// 여기서 콜리전 비활성화
 	//GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Ignore);
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickEnd!"));

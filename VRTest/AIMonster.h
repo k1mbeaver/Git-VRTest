@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "AIMonster.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
+
 UCLASS()
 class VRTEST_API AAIMonster : public ACharacter
 {
@@ -36,6 +38,9 @@ public:
 	class UAIAnimInstance* MonsterAnimation;
 	class AMyAIController* MonsterController;
 	class UMyGameInstance* MyGameInstance;
+
+	//델리게이트 변수 선언
+	FOnAttackEndDelegate OnAttackEnd;
 
 protected:
 	// Called when the game starts or when spawned
