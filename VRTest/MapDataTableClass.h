@@ -21,6 +21,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FName NextMapName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FText MapText;
 };
 
 UCLASS()

@@ -14,6 +14,9 @@ struct FAIDataTable;
 struct FMapDataTable;
 
 class UDataTable;
+
+DECLARE_MULTICAST_DELEGATE(FOnPlayerKillDelegate);
+
 /**
  * 
  */
@@ -49,7 +52,17 @@ public:
 	int GetAICount(int MapType);
 	FName GetMapName(int MapType);
 	FName GetNextMapName(int MapType);
+	FText GetMapText(int MapType);
+
+	// 변수 관련 함수
+	int GetPlayerKill();
+	void SetPlayerKill();
+	void InitializePlayerKill();
+
+	// 변수
+	int nPlayerKill = 0;
 	
+	FOnPlayerKillDelegate OnPlayerKill;
 private:
 	UPROPERTY()
 		UDataTable* FPlayerFileTable;

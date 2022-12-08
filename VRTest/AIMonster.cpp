@@ -72,6 +72,8 @@ void AAIMonster::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void AAIMonster::MonsterDead()
 {
+	MyGameInstance->SetPlayerKill();
+
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
 }

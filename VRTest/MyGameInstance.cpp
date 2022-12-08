@@ -157,3 +157,27 @@ FName UMyGameInstance::GetNextMapName(int MapType)
 	FName GetNextMapName = MapData->NextMapName;
 	return GetNextMapName;
 }
+
+FText UMyGameInstance::GetMapText(int MapType)
+{
+	FString strMapType = FString::FromInt(MapType);
+	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
+	FText GetMapText = MapData->MapText;
+	return GetMapText;
+}
+
+int UMyGameInstance::GetPlayerKill()
+{
+	return nPlayerKill;
+}
+
+void UMyGameInstance::SetPlayerKill()
+{
+	nPlayerKill = nPlayerKill + 1;
+	OnPlayerKill.Broadcast();
+}
+
+void UMyGameInstance::InitializePlayerKill()
+{
+	nPlayerKill = 0;
+}

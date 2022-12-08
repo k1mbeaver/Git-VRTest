@@ -35,6 +35,8 @@ void AReadyObject::StartStage()
 {
 	PlayerStage = PlayerStage++;
 	MyGameInstance->SetPlayerStage("Player", PlayerStage);
+	MyGameInstance->InitializePlayerKill();
+
 	FName fnMapName = MyGameInstance->GetMapName(PlayerStage);
 
 	UGameplayStatics::OpenLevel(GetWorld(), fnMapName);

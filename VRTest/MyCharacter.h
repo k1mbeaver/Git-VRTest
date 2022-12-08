@@ -126,4 +126,12 @@ public:
 	{
 
 	}
+
+	// ¿Ã∫•∆Æ
+	UFUNCTION(BlueprintNativeEvent)
+		void OnPlayerKillMonster();
+	virtual void OnPlayerKillMonster_Implementation()
+	{
+
+	}
 };

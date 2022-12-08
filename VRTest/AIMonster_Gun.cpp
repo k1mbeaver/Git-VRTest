@@ -70,13 +70,15 @@ void AAIMonster_Gun::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AAIMonster_Gun::MonsterDead()
 {
+	MyGameInstance->SetPlayerKill();
+
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
 
 	// 몬스터 들이 쓰러지면 충돌 X
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
-	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	//GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+	//GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 }
 
 void AAIMonster_Gun::MonsterPistolShot()

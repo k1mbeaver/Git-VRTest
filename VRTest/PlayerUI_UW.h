@@ -13,8 +13,37 @@ UCLASS()
 class VRTEST_API UPlayerUI_UW : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextDefaultKill;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextCurrentKill;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextTest;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextKill;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextColon;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextSlash;
 
 protected:
 	virtual void NativeOnInitialized() override;
+	virtual void NativeConstruct() override;
+
+public:
+	// KillingPoint 관련
+	void SetCurrentKill();
+	void VisibleKillingPoint();
+	void HiddenKillingPoint();
+
+	// PlayerText 관련
+	void VisibleText();
+	void HiddenText();
+	void SetPlayerText(FText MyText);
 };
