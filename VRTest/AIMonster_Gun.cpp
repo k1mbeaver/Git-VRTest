@@ -14,6 +14,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
+#include "MyCharacter.h"
 
 // Sets default values
 AAIMonster_Gun::AAIMonster_Gun()
@@ -31,7 +32,7 @@ AAIMonster_Gun::AAIMonster_Gun()
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
-	MuzzleLocation->SetupAttachment(GetCapsuleComponent());
+	MuzzleLocation->SetupAttachment(GetMesh());
 
 	MonsterSpeed = 200.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
@@ -52,6 +53,8 @@ void AAIMonster_Gun::BeginPlay()
 	AttackParticle = MyGameInstance->GetParticle("AIShot");
 	AttackSound = MyGameInstance->GetSound("AIShot");
 	BreakAISound = MyGameInstance->GetSound("BreakAISound");
+
+	PlayerLocation = UGameplayStatics::GetPlayerController(this, 0)->GetPawn()->GetActorLocation();
 }
 
 // Called every frame
@@ -59,6 +62,7 @@ void AAIMonster_Gun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	RotateToPlayer(PlayerLocation);
 }
 
 // Called to bind functionality to input
@@ -106,4 +110,13 @@ void AAIMonster_Gun::MonsterPistolShot()
 			World->SpawnActor<APlayerProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
 	}
+}
+
+void AAIMonster_Gun::RotateToPlayer(FVector MyLocation)
+{
+	FVector ToTarget = MyLocation - GetMesh()->GetComponentLocation();
+	FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
+	GetCapsuleComponent()->SetWorldRotation(LookAtRotation);
+	//GetMesh()->SetWorldRotation(LookAtRotation);
+	//MuzzleLocation->SetWorldRotation(LookAtRotation);
 }

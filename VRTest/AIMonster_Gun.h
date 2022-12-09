@@ -44,6 +44,7 @@ public:
 		class UGameplayStatics* GameStatic;
 
 	class UMyGameInstance* MyGameInstance;
+	FVector PlayerLocation;
 
 
 protected:
@@ -62,4 +63,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void MonsterPistolShot();
+
+	UFUNCTION(BlueprintCallable)
+		void RotateToPlayer(FVector MyLocation);
 };
