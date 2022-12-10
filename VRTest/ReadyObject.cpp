@@ -22,6 +22,16 @@ void AReadyObject::BeginPlay()
 
 	BreakObjectSound = MyGameInstance->GetSound("BreakObjectSound");
 	PlayerStage = MyGameInstance->GetPlayerStage("Player");
+
+	if (PlayerStage <= 1)
+	{
+		bPlaying = false;
+	}
+
+	else
+	{
+		bPlaying = true;
+	}
 }
 
 // Called every frame

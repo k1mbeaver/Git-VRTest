@@ -32,7 +32,7 @@ AAIMonster_Gun::AAIMonster_Gun()
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ProjectMonster"));
 
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
-	MuzzleLocation->SetupAttachment(GetMesh());
+	MuzzleLocation->SetupAttachment(GetCapsuleComponent());
 
 	MonsterSpeed = 200.0f; // 스피드는 지금 하드코딩 해두고 나중에 데이터 테이블로 옮기자
 
@@ -87,7 +87,7 @@ void AAIMonster_Gun::MonsterDead()
 
 void AAIMonster_Gun::MonsterPistolShot()
 {
-	GameStatic->SpawnEmitterAttached(AttackParticle, MuzzleLocation, FName("MuzzleLocatiom")); // 파티클 출력
+	GameStatic->SpawnEmitterAttached(AttackParticle, MuzzleLocation, FName("MuzzleLocation")); // 파티클 출력
 	UGameplayStatics::PlaySoundAtLocation(this, AttackSound, MuzzleLocation->GetComponentLocation()); // 사운드 출력
 
 	// try and fire a projectile
@@ -97,7 +97,8 @@ void AAIMonster_Gun::MonsterPistolShot()
 
 		if (World != nullptr)
 		{
-			const FRotator SpawnRotation = GetControlRotation();
+			//const FRotator SpawnRotation = GetControlRotation();
+			const FRotator SpawnRotation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentRotation() : GetActorRotation());
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 			const FVector SpawnLocation = ((MuzzleLocation != nullptr) ? MuzzleLocation->GetComponentLocation() : GetActorLocation());
 

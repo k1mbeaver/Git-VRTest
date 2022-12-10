@@ -17,8 +17,11 @@ public:
 
 	class UMyGameInstance* MyGameInstance;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound, Meta = (AllowPrivateAccess = true))
 		USoundWave* BreakObjectSound;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Stage, Meta = (AllowPrivateAccess = true))
+		bool bPlaying;
 
 private:
 	int PlayerStage;
