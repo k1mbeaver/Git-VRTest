@@ -44,6 +44,11 @@ void UPlayerUI_UW::NativeConstruct()
 		VisibleText();
 	}
 
+	else if (PlayerStage == 7)
+	{
+		return;
+	}
+
 	else
 	{
 		VisibleKillingPoint();

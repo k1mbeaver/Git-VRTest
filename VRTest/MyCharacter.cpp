@@ -72,6 +72,11 @@ void AMyCharacter::BeginPlay()
 		MyPlayerState = EMyPlayerState::E_Ready;
 	}
 
+	else if (PlayerStage == 7)
+	{
+		MyPlayerState = EMyPlayerState::E_Exit;
+	}
+
 	else
 	{
 		MyPlayerState = EMyPlayerState::E_Play;
