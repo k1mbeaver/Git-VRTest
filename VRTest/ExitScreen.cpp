@@ -29,6 +29,6 @@ void AExitScreen::Tick(float DeltaTime)
 
 void AExitScreen::GameExit()
 {
-	MyGameInstance->SetPlayerStage("Player", 0);
+	MyGameInstance->SetPlayerStage("Player", 8);
 }
 

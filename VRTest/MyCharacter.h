@@ -14,6 +14,7 @@ enum class EMyPlayerState : uint8
 	E_Play = 2 UMETA(DisplayName = "Play"),
 	E_Paused = 3 UMETA(DisplayName = "Pause"),
 	E_Exit = 4 UMETA(DisplayName = "Exit"),
+	E_Test = 5 UMETA(DisplayName = "Test"),
 
 };
 

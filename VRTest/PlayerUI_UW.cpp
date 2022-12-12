@@ -49,6 +49,11 @@ void UPlayerUI_UW::NativeConstruct()
 		return;
 	}
 
+	else if (PlayerStage == 8)
+	{
+		return;
+	}
+
 	else
 	{
 		VisibleKillingPoint();

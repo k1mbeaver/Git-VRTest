@@ -19,5 +19,5 @@ void UWidgetMenu_UW::GameResume()
 void UWidgetMenu_UW::GameExit()
 {
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	MyGameInstance->SetPlayerStage("Player", 0);
+	MyGameInstance->SetPlayerStage("Player", 8);
 }
