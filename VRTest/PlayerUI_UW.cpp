@@ -3,7 +3,11 @@
 
 #include "PlayerUI_UW.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
+#include "Components/Button.h"
 #include "MyGameInstance.h"
+#include "MyCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 void UPlayerUI_UW::NativeOnInitialized()
 {
@@ -15,13 +19,20 @@ void UPlayerUI_UW::NativeOnInitialized()
 	TextKill = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextKill")));
 	TextColon = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextColon")));
 	TextSlash = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextSlash")));
+	MenuImage = Cast<UImage>(GetWidgetFromName(TEXT("MenuImage")));
+	BtTutorial = Cast<UButton>(GetWidgetFromName(TEXT("BtTutorial")));
+	BtReplay = Cast<UButton>(GetWidgetFromName(TEXT("BtReplay")));
+	BtExit = Cast<UButton>(GetWidgetFromName(TEXT("BtExit")));
 }
 
 void UPlayerUI_UW::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	IsMenuOn = false;
+
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	AMyCharacter* MyPlayerCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 
 	int PlayerStage = MyGameInstance->GetPlayerStage("Player");
 	int StageMonsters = MyGameInstance->GetAICount(PlayerStage);
@@ -31,6 +42,7 @@ void UPlayerUI_UW::NativeConstruct()
 	TextDefaultKill->SetText(ftStageMonsters);
 
 	MyGameInstance->OnPlayerKill.AddUObject(this, &UPlayerUI_UW::SetCurrentKill);
+	MyPlayerCharacter->OnPlayerMenuDelegate.AddUObject(this, &UPlayerUI_UW::SetMenu);
 
 	if (PlayerStage == 0)
 	{
@@ -101,4 +113,40 @@ void UPlayerUI_UW::HiddenText()
 void UPlayerUI_UW::SetPlayerText(FText MyText)
 {
 	TextTest->SetText(MyText);
+}
+
+void UPlayerUI_UW::SetMenu()
+{
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	int PlayerStage = MyGameInstance->GetPlayerStage("Player");
+
+	if (IsMenuOn)
+	{
+		HiddenMenu();
+	}
+
+	else
+	{
+		VisibleMenu();
+	}
+}
+
+void UPlayerUI_UW::VisibleMenu()
+{
+	MenuImage->SetVisibility(ESlateVisibility::Visible);
+	BtTutorial->SetVisibility(ESlateVisibility::Visible);
+	BtReplay->SetVisibility(ESlateVisibility::Visible);
+	BtExit->SetVisibility(ESlateVisibility::Visible);
+
+	IsMenuOn = true;
+}
+
+void UPlayerUI_UW::HiddenMenu()
+{
+	MenuImage->SetVisibility(ESlateVisibility::Hidden);
+	BtTutorial->SetVisibility(ESlateVisibility::Hidden);
+	BtReplay->SetVisibility(ESlateVisibility::Hidden);
+	BtExit->SetVisibility(ESlateVisibility::Hidden);
+
+	IsMenuOn = false;
 }

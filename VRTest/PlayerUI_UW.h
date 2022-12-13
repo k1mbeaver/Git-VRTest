@@ -32,11 +32,24 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UTextBlock* TextSlash;
 
+	UPROPERTY(Meta = (BindWidget))
+		class UImage* MenuImage;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UButton* BtTutorial;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UButton* BtReplay;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UButton* BtExit;
+
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
 
 public:
+	bool IsMenuOn;
 	// KillingPoint 관련
 	void SetCurrentKill();
 	void VisibleKillingPoint();
@@ -46,4 +59,9 @@ public:
 	void VisibleText();
 	void HiddenText();
 	void SetPlayerText(FText MyText);
+
+	// Menu 관련
+	void SetMenu();
+	void VisibleMenu();
+	void HiddenMenu();
 };

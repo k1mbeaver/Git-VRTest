@@ -37,6 +37,7 @@ AMyCharacter::AMyCharacter()
 
 	IsRightGrip = false;
 	IsLeftGrip = false;
+	IsMenuOn = false;
 
 	CurrentMonsterKill = 0;
 }
@@ -216,4 +217,19 @@ void AMyCharacter::PlayerGameStart()
 	MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
 	UGameplayStatics::OpenLevel(GetWorld(), "ReadyMap");
 	//UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
+}
+
+void AMyCharacter::PressedMenuButton()
+{
+	if (!IsMenuOn)
+	{
+		OnPlayerMenuDelegate.Broadcast();
+		IsMenuOn = true;
+	}
+
+	else
+	{
+		OnPlayerMenuDelegate.Broadcast();
+		IsMenuOn = false;
+	}
 }

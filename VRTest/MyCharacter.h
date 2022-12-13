@@ -18,6 +18,8 @@ enum class EMyPlayerState : uint8
 
 };
 
+DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuDelegate);
+
 UCLASS()
 class VRTEST_API AMyCharacter : public ACharacter
 {
@@ -61,6 +63,7 @@ public:
 
 	bool IsRightGrip;
 	bool IsLeftGrip;
+	bool IsMenuOn;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Attack, Meta = (AllowPrivateAccess = true))
 		USoundWave* StartVRSound;
@@ -86,6 +89,10 @@ public:
 
 	class UMyGameInstance* MyGameInstance;
 
+	FOnPlayerMenuDelegate OnPlayerMenuDelegate;
+
+	UFUNCTION(BlueprintCallable)
+		void PressedMenuButton();
 
 	UFUNCTION(BlueprintCallable)
 	void PressedLeftGrip();
