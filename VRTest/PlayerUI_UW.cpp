@@ -8,6 +8,7 @@
 #include "MyGameInstance.h"
 #include "MyCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Styling/SlateBrush.h"
 
 void UPlayerUI_UW::NativeOnInitialized()
 {
@@ -43,6 +44,13 @@ void UPlayerUI_UW::NativeConstruct()
 
 	MyGameInstance->OnPlayerKill.AddUObject(this, &UPlayerUI_UW::SetCurrentKill);
 	MyPlayerCharacter->OnPlayerMenuDelegate.AddUObject(this, &UPlayerUI_UW::SetMenu);
+	MyPlayerCharacter->OnPlayerMenuUpDelegate.AddUObject(this, &UPlayerUI_UW::MenuUp);
+	MyPlayerCharacter->OnPlayerMenuDownDelegate.AddUObject(this, &UPlayerUI_UW::MenuDown);
+	MyPlayerCharacter->OnPlayerMenuClickDelegate.AddUObject(this, &UPlayerUI_UW::MenuClick);
+
+	BtArray.Add(BtTutorial);
+	BtArray.Add(BtReplay);
+	BtArray.Add(BtExit);
 
 	if (PlayerStage == 0)
 	{
@@ -133,6 +141,7 @@ void UPlayerUI_UW::SetMenu()
 
 void UPlayerUI_UW::VisibleMenu()
 {
+	// 튜토리얼 모드의 경우에는 튜토리얼은 IsFocusible = false
 	MenuImage->SetVisibility(ESlateVisibility::Visible);
 	BtTutorial->SetVisibility(ESlateVisibility::Visible);
 	BtReplay->SetVisibility(ESlateVisibility::Visible);
@@ -149,4 +158,25 @@ void UPlayerUI_UW::HiddenMenu()
 	BtExit->SetVisibility(ESlateVisibility::Hidden);
 
 	IsMenuOn = false;
+	BtSequence = 0;
+}
+
+void UPlayerUI_UW::MenuUp()
+{
+	FocusButton(0);
+}
+
+void UPlayerUI_UW::MenuDown()
+{
+
+}
+
+void UPlayerUI_UW::MenuClick()
+{
+	OnMenuClick();
+}
+
+void UPlayerUI_UW::FocusButton(int nButton)
+{
+	BtArray[nButton]->SetFocus();
 }

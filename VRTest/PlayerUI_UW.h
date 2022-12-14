@@ -44,6 +44,9 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UButton* BtExit;
 
+	TArray<UButton*> BtArray;
+	int BtSequence = 0;
+
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
@@ -64,4 +67,17 @@ public:
 	void SetMenu();
 	void VisibleMenu();
 	void HiddenMenu();
+	void MenuDown();
+	void MenuUp();
+	void MenuClick();
+
+	// ¿Ã∫•∆Æ
+	UFUNCTION(BlueprintNativeEvent)
+		void OnMenuClick();
+	virtual void OnMenuClick_Implementation()
+	{
+
+	}
+
+	void FocusButton(int nButton);
 };

@@ -104,10 +104,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//PlayerInputComponent->BindAction("TriggerLeft", IE_Pressed, this, &AMyCharacter::PressedLeftGrip);
-	//PlayerInputComponent->BindAction("TriggerLeft", IE_Released, this, &AMyCharacter::ReleasedLeftGrip);
-	//PlayerInputComponent->BindAction("TriggerRight", IE_Pressed, this, &AMyCharacter::PressedRightGrip);
-	//PlayerInputComponent->BindAction("TriggerRight", IE_Released, this, &AMyCharacter::ReleasedRightGrip);
+	PlayerInputComponent->BindAction("MenuUp", IE_Pressed, this, &AMyCharacter::PressedMenuUpButton);
+	PlayerInputComponent->BindAction("MenuDown", IE_Released, this, &AMyCharacter::PressedMenuDownButton);
+	PlayerInputComponent->BindAction("MenuClick", IE_Pressed, this, &AMyCharacter::PressedMenuClickButton);
 }
 
 void AMyCharacter::PressedLeftGrip()
@@ -231,5 +230,29 @@ void AMyCharacter::PressedMenuButton()
 	{
 		OnPlayerMenuDelegate.Broadcast();
 		IsMenuOn = false;
+	}
+}
+
+void AMyCharacter::PressedMenuUpButton()
+{
+	if (IsMenuOn)
+	{
+		OnPlayerMenuUpDelegate.Broadcast();
+	}
+}
+
+void AMyCharacter::PressedMenuDownButton()
+{
+	if (IsMenuOn)
+	{
+		OnPlayerMenuDownDelegate.Broadcast();
+	}
+}
+
+void AMyCharacter::PressedMenuClickButton()
+{
+	if (IsMenuOn)
+	{
+		OnPlayerMenuClickDelegate.Broadcast();
 	}
 }

@@ -19,6 +19,9 @@ enum class EMyPlayerState : uint8
 };
 
 DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuUpDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuDownDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuClickDelegate);
 
 UCLASS()
 class VRTEST_API AMyCharacter : public ACharacter
@@ -90,9 +93,21 @@ public:
 	class UMyGameInstance* MyGameInstance;
 
 	FOnPlayerMenuDelegate OnPlayerMenuDelegate;
+	FOnPlayerMenuUpDelegate OnPlayerMenuUpDelegate;
+	FOnPlayerMenuDownDelegate OnPlayerMenuDownDelegate;
+	FOnPlayerMenuClickDelegate OnPlayerMenuClickDelegate;
 
 	UFUNCTION(BlueprintCallable)
 		void PressedMenuButton();
+
+	UFUNCTION(BlueprintCallable)
+		void PressedMenuUpButton();
+
+	UFUNCTION(BlueprintCallable)
+		void PressedMenuDownButton();
+
+	UFUNCTION(BlueprintCallable)
+		void PressedMenuClickButton();
 
 	UFUNCTION(BlueprintCallable)
 	void PressedLeftGrip();
