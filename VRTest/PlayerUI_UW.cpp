@@ -163,20 +163,66 @@ void UPlayerUI_UW::HiddenMenu()
 
 void UPlayerUI_UW::MenuUp()
 {
-	FocusButton(0);
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuUp!"));
+	if (BtSequence == 0)
+	{
+		return;
+	}
+
+	else
+	{
+		BtSequence--;
+	}
+	//FocusButton(0);
 }
 
 void UPlayerUI_UW::MenuDown()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuDown!"));
+	if (BtSequence == 2)
+	{
+		return;
+	}
 
+	else
+	{
+		BtSequence++;
+	}
 }
 
 void UPlayerUI_UW::MenuClick()
 {
 	OnMenuClick();
+
+	if (BtSequence == 0)
+	{
+		UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+		MyGameInstance->SetPlayerStage("Player", 8);
+		UGameplayStatics::OpenLevel(GetWorld(), "TestMap");
+
+	}
+
+	else if (BtSequence == 1)
+	{
+		UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+		MyGameInstance->SetPlayerStage("Player", 0);
+		UGameplayStatics::OpenLevel(GetWorld(), "StartMap");
+	}
+
+	else if (BtSequence == 2)
+	{
+		UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+		MyGameInstance->SetPlayerStage("Player", 0);
+		UKismetSystemLibrary::QuitGame(this, 0, EQuitPreference::Quit, false);
+	}
+
+	else
+	{
+		return;
+	}
 }
 
 void UPlayerUI_UW::FocusButton(int nButton)
 {
-	BtArray[nButton]->SetFocus();
+	//BtArray[nButton]->
 }
