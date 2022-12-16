@@ -9,6 +9,7 @@
 #include "MyCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Styling/SlateBrush.h"
+#include "Styling/SlateTypes.h"
 
 void UPlayerUI_UW::NativeOnInitialized()
 {
@@ -24,6 +25,9 @@ void UPlayerUI_UW::NativeOnInitialized()
 	BtTutorial = Cast<UButton>(GetWidgetFromName(TEXT("BtTutorial")));
 	BtReplay = Cast<UButton>(GetWidgetFromName(TEXT("BtReplay")));
 	BtExit = Cast<UButton>(GetWidgetFromName(TEXT("BtExit")));
+	TextPointOne = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointOne")));
+	TextPointTwo = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointTwo")));
+	TextPointThree = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointThree")));
 }
 
 void UPlayerUI_UW::NativeConstruct()
@@ -48,9 +52,9 @@ void UPlayerUI_UW::NativeConstruct()
 	MyPlayerCharacter->OnPlayerMenuDownDelegate.AddUObject(this, &UPlayerUI_UW::MenuDown);
 	MyPlayerCharacter->OnPlayerMenuClickDelegate.AddUObject(this, &UPlayerUI_UW::MenuClick);
 
-	BtArray.Add(BtTutorial);
-	BtArray.Add(BtReplay);
-	BtArray.Add(BtExit);
+	BtArray.Insert(TextPointOne, 0);
+	BtArray.Insert(TextPointTwo, 1);
+	BtArray.Insert(TextPointThree, 2);
 
 	if (PlayerStage == 0)
 	{
@@ -146,6 +150,7 @@ void UPlayerUI_UW::VisibleMenu()
 	BtTutorial->SetVisibility(ESlateVisibility::Visible);
 	BtReplay->SetVisibility(ESlateVisibility::Visible);
 	BtExit->SetVisibility(ESlateVisibility::Visible);
+	FocusButton();
 
 	IsMenuOn = true;
 }
@@ -156,6 +161,7 @@ void UPlayerUI_UW::HiddenMenu()
 	BtTutorial->SetVisibility(ESlateVisibility::Hidden);
 	BtReplay->SetVisibility(ESlateVisibility::Hidden);
 	BtExit->SetVisibility(ESlateVisibility::Hidden);
+	UnFocusButton();
 
 	IsMenuOn = false;
 	BtSequence = 0;
@@ -171,7 +177,9 @@ void UPlayerUI_UW::MenuUp()
 
 	else
 	{
+		UnFocusButton();
 		BtSequence--;
+		FocusButton();
 	}
 	//FocusButton(0);
 }
@@ -186,7 +194,9 @@ void UPlayerUI_UW::MenuDown()
 
 	else
 	{
+		UnFocusButton();
 		BtSequence++;
+		FocusButton();
 	}
 }
 
@@ -222,7 +232,12 @@ void UPlayerUI_UW::MenuClick()
 	}
 }
 
-void UPlayerUI_UW::FocusButton(int nButton)
+void UPlayerUI_UW::FocusButton()
 {
-	//BtArray[nButton]->
+	BtArray[BtSequence]->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UPlayerUI_UW::UnFocusButton()
+{
+	BtArray[BtSequence]->SetVisibility(ESlateVisibility::Hidden);
 }

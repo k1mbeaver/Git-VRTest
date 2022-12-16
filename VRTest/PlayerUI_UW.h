@@ -44,7 +44,16 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UButton* BtExit;
 
-	TArray<UButton*> BtArray;
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextPointOne;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextPointTwo;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextPointThree;
+
+	TArray<UTextBlock*> BtArray;
 	int BtSequence = 0;
 
 protected:
@@ -79,5 +88,6 @@ public:
 
 	}
 
-	void FocusButton(int nButton);
+	void FocusButton();
+	void UnFocusButton();
 };
