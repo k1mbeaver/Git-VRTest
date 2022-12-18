@@ -145,32 +145,73 @@ void UPlayerUI_UW::SetMenu()
 
 void UPlayerUI_UW::VisibleMenu()
 {
-	// 튜토리얼 모드의 경우에는 튜토리얼은 IsFocusible = false
-	MenuImage->SetVisibility(ESlateVisibility::Visible);
-	BtTutorial->SetVisibility(ESlateVisibility::Visible);
-	BtReplay->SetVisibility(ESlateVisibility::Visible);
-	BtExit->SetVisibility(ESlateVisibility::Visible);
-	FocusButton();
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	int myStage = MyGameInstance->GetPlayerStage("Player");
+
+	if (myStage == 8)
+	{
+		// 튜토리얼 모드의 경우에는 튜토리얼은 IsFocusible = false
+		BtSequence = 1;
+		MenuImage->SetVisibility(ESlateVisibility::Visible);
+		BtReplay->SetVisibility(ESlateVisibility::Visible);
+		BtExit->SetVisibility(ESlateVisibility::Visible);
+		FocusButton();
+	}
+
+	else
+	{
+		// 튜토리얼 모드의 경우에는 튜토리얼은 IsFocusible = false
+		MenuImage->SetVisibility(ESlateVisibility::Visible);
+		BtTutorial->SetVisibility(ESlateVisibility::Visible);
+		BtReplay->SetVisibility(ESlateVisibility::Visible);
+		BtExit->SetVisibility(ESlateVisibility::Visible);
+		FocusButton();
+	}
 
 	IsMenuOn = true;
 }
 
 void UPlayerUI_UW::HiddenMenu()
 {
-	MenuImage->SetVisibility(ESlateVisibility::Hidden);
-	BtTutorial->SetVisibility(ESlateVisibility::Hidden);
-	BtReplay->SetVisibility(ESlateVisibility::Hidden);
-	BtExit->SetVisibility(ESlateVisibility::Hidden);
-	UnFocusButton();
+
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	int myStage = MyGameInstance->GetPlayerStage("Player");
+
+	if (myStage == 8)
+	{
+		MenuImage->SetVisibility(ESlateVisibility::Hidden);
+		BtTutorial->SetVisibility(ESlateVisibility::Hidden);
+		BtReplay->SetVisibility(ESlateVisibility::Hidden);
+		BtExit->SetVisibility(ESlateVisibility::Hidden);
+		UnFocusButton();
+		BtSequence = 1;
+	}
+
+	else
+	{
+		MenuImage->SetVisibility(ESlateVisibility::Hidden);
+		BtTutorial->SetVisibility(ESlateVisibility::Hidden);
+		BtReplay->SetVisibility(ESlateVisibility::Hidden);
+		BtExit->SetVisibility(ESlateVisibility::Hidden);
+		UnFocusButton();
+		BtSequence = 0;
+	}
 
 	IsMenuOn = false;
-	BtSequence = 0;
 }
 
 void UPlayerUI_UW::MenuUp()
 {
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	int myStage = MyGameInstance->GetPlayerStage("Player");
+
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuUp!"));
 	if (BtSequence == 0)
+	{
+		return;
+	}
+
+	else if (BtSequence == 1 && myStage == 8)
 	{
 		return;
 	}
@@ -186,6 +227,9 @@ void UPlayerUI_UW::MenuUp()
 
 void UPlayerUI_UW::MenuDown()
 {
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	int myStage = MyGameInstance->GetPlayerStage("Player");
+
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuDown!"));
 	if (BtSequence == 2)
 	{
