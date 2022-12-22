@@ -205,7 +205,6 @@ void UPlayerUI_UW::MenuUp()
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	int myStage = MyGameInstance->GetPlayerStage("Player");
 
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuUp!"));
 	if (BtSequence == 0)
 	{
 		return;
@@ -222,7 +221,6 @@ void UPlayerUI_UW::MenuUp()
 		BtSequence--;
 		FocusButton();
 	}
-	//FocusButton(0);
 }
 
 void UPlayerUI_UW::MenuDown()
@@ -230,7 +228,6 @@ void UPlayerUI_UW::MenuDown()
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	int myStage = MyGameInstance->GetPlayerStage("Player");
 
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MenuDown!"));
 	if (BtSequence == 2)
 	{
 		return;

@@ -22,9 +22,6 @@ EBTNodeResult::Type UBTTask_PistolShot::ExecuteTask(UBehaviorTreeComponent& Owne
 
     MyAICharacter->MonsterPistolShot();
     OwnerComp.GetBlackboardComponent()->SetValueAsBool(AMyAIController_Gun::CanShot, false);
-    //MyAICharacter->OnAttackEnd.AddLambda([this]() -> void {
-        //IsAttacking = false;
-        //});
 
     return EBTNodeResult::InProgress;
 }

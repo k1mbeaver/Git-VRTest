@@ -50,7 +50,5 @@ void AReadyObject::StartStage()
 	FName fnMapName = MyGameInstance->GetMapName(PlayerStage);
 
 	UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
-
-	//UGameplayStatics::OpenLevel(GetWorld(), "Tutorial");
 }
 

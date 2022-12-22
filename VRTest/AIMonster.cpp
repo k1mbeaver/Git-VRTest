@@ -51,7 +51,6 @@ void AAIMonster::BeginPlay()
 
 	GetCharacterMovement()->MaxWalkSpeed = MonsterSpeed;
 
-	//MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 	MonsterAnimation->AttackEnd_Attack.AddUObject(this, &AAIMonster::MonsterPunchEnd);
 	MonsterAnimation->AttackCheck_Attack.AddUObject(this, &AAIMonster::AttackCheck);
 }
@@ -101,15 +100,9 @@ void AAIMonster::MonsterPunchEnd()
 	AnimInstance->IsAttacking = false;
 
 	OnAttackEnd.Broadcast();
-
-	// 여기서 콜리전 비활성화
-	//GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Ignore);
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickEnd!"));
 }
 
 void AAIMonster::AttackCheck()
 {
-	// 여기서 콜리전 활성화
-	//GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECR_Block);
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("MonsterKickStart!"));
+
 }

@@ -113,7 +113,6 @@ void AMyCharacter::PressedLeftGrip()
 {
 	if (!IsLeftGrip)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("LeftPunchPressed"));
 		LeftHandInstance->bGrip = true;
 	}
 }
@@ -122,7 +121,6 @@ void AMyCharacter::ReleasedLeftGrip()
 {
 	if (!IsLeftGrip)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("LeftPunchReleased"));
 		LeftHandInstance->bGrip = false;
 	}
 }
@@ -131,7 +129,6 @@ void AMyCharacter::PressedRightGrip()
 {
 	if (!IsRightGrip)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("RightPunchPressed"));
 		RightHandInstance->bGrip = true;
 	}
 }
@@ -140,7 +137,6 @@ void AMyCharacter::ReleasedRightGrip()
 {
 	if (!IsRightGrip)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("RightPunchReleased"));
 		RightHandInstance->bGrip = false;
 	}
 }
@@ -173,8 +169,6 @@ void AMyCharacter::SetIsLeftGrip()
 
 void AMyCharacter::PlayerDead()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("PlayerDead"));
-
 	MyGameInstance->SetPlayerStage("Player", 1);
 	
 	UGameplayStatics::OpenLevel(GetWorld(), "ReadyMap");
@@ -188,13 +182,6 @@ void AMyCharacter::KillingMonster()
 	{
 		OnAllKillMonster();
 		MyGameInstance->SetPlayerStage("Player", MyGameInstance->GetPlayerStage("Player") + 1);
-		/*
-		FName fnMapName = FName(MyGameInstance->GetNextMapName(PlayerStage));
-
-		MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
-
-		UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
-		*/
 	}
 }
 
@@ -215,7 +202,6 @@ void AMyCharacter::PlayerGameStart()
 {
 	MyGameInstance->SetPlayerStage("Player", PlayerStage + 1);
 	UGameplayStatics::OpenLevel(GetWorld(), "ReadyMap");
-	//UGameplayStatics::OpenLevel(GetWorld(), fnMapName);
 }
 
 void AMyCharacter::PressedMenuButton()

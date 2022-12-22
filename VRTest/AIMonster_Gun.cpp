@@ -78,11 +78,6 @@ void AAIMonster_Gun::MonsterDead()
 
 	MonsterAnimation->SetDeadAnim();
 	MonsterController->StopAI();
-
-	// 몬스터 들이 쓰러지면 충돌 X
-	//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	//GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
-	//GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 }
 
 void AAIMonster_Gun::MonsterPistolShot()
@@ -118,6 +113,4 @@ void AAIMonster_Gun::RotateToPlayer(FVector MyLocation)
 	FVector ToTarget = MyLocation - GetMesh()->GetComponentLocation();
 	FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
 	GetCapsuleComponent()->SetWorldRotation(LookAtRotation);
-	//GetMesh()->SetWorldRotation(LookAtRotation);
-	//MuzzleLocation->SetWorldRotation(LookAtRotation);
 }
