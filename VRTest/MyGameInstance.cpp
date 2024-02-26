@@ -120,6 +120,19 @@ void UMyGameInstance::SetPlayerStage(FString PlayerType, int SetPlayerStage)
 	PlayerData->PlayerStage = SetPlayerStage;
 }
 
+float UMyGameInstance::GetPlayerHeight(FString PlayerType)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerType, TEXT(""));
+	float GetPlayerHeight = PlayerData->PositionHeight;
+	return GetPlayerHeight;
+}
+
+void UMyGameInstance::SetPlayerHeight(FString PlayerType, float SetPlayerHeight)
+{
+	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerType, TEXT(""));
+	PlayerData->PositionHeight = SetPlayerHeight;
+}
+
 float UMyGameInstance::GetAISpeed(FString AIType)
 {
 	FAIDataTable* AIData = FAIFileTable->FindRow<FAIDataTable>(*AIType, TEXT(""));
@@ -164,6 +177,14 @@ FText UMyGameInstance::GetMapText(int MapType)
 	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
 	FText GetMapText = MapData->MapText;
 	return GetMapText;
+}
+
+FVector UMyGameInstance::GetMapPosition(int MapType)
+{
+	FString strMapType = FString::FromInt(MapType);
+	FMapDataTable* MapData = FMapFileTable->FindRow<FMapDataTable>(*strMapType, TEXT(""));
+	FVector GetMapPosition = MapData->MapStartPoint;
+	return GetMapPosition;
 }
 
 int UMyGameInstance::GetPlayerKill()

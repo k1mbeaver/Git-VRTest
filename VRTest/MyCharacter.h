@@ -40,6 +40,8 @@ private:
 	int TotalMonsterKill;
 	int CurrentMonsterKill;
 	int PlayerStage;
+	FVector PlayerPosition;
+	float GroundPosition;
 
 public:	
 	// Called every frame
@@ -62,6 +64,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
 		class AReadyObject* MyReadyObject;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Camera)
+		class UCameraComponent* MyCamera;
 
 
 	bool IsRightGrip;
@@ -129,6 +134,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PlayerDead();
+
+	UFUNCTION(BlueprintCallable)
+		void PositionClick();
 
 	// 몬스터를 킬했을 시에 호출하는 함수
 	UFUNCTION(BlueprintCallable)

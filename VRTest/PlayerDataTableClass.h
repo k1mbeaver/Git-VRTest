@@ -21,6 +21,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UParticleSystem* PlayerShootingParticle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float PositionHeight;
 };
 
 UCLASS()

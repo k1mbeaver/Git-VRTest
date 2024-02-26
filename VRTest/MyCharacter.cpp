@@ -7,6 +7,7 @@
 #include "MotionControllerComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ActorComponent.h"
+#include "Camera/CameraComponent.h"
 #include "MyGameInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,10 +25,12 @@ AMyCharacter::AMyCharacter()
 	MeshLeft = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHLEFT"));
 	MeshRight = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHRIGHT"));
 
+	MyCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("MYCAMERA"));
 	//MyReadyObject = GetCapsuleComponent()->GetChildComponent(0);
 
 	MotionLeft->SetupAttachment(GetCapsuleComponent());
 	MotionRight->SetupAttachment(GetCapsuleComponent());
+	MyCamera->SetupAttachment(GetCapsuleComponent());
 	
 	MeshLeft->SetupAttachment(MotionLeft);
 	MeshRight->SetupAttachment(MotionRight);
@@ -48,7 +51,7 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	
+
 	LeftHandInstance = Cast<UPlayerAnim>(MeshLeft->GetAnimInstance());
 	RightHandInstance = Cast<UPlayerAnim>(MeshRight->GetAnimInstance());
 
@@ -90,6 +93,10 @@ void AMyCharacter::BeginPlay()
 	}
 
 	GetWorldSettings()->SetTimeDilation(1.0f);
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.Z = curLocation.Z - MyGameInstance->GetPlayerHeight("Player");
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
 }
 
 // Called every frame
@@ -107,6 +114,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("MenuUp", IE_Pressed, this, &AMyCharacter::PressedMenuUpButton);
 	PlayerInputComponent->BindAction("MenuDown", IE_Released, this, &AMyCharacter::PressedMenuDownButton);
 	PlayerInputComponent->BindAction("MenuClick", IE_Pressed, this, &AMyCharacter::PressedMenuClickButton);
+	PlayerInputComponent->BindAction("Position", IE_Pressed, this, &AMyCharacter::PositionClick);
 }
 
 void AMyCharacter::PressedLeftGrip()
@@ -240,5 +248,31 @@ void AMyCharacter::PressedMenuClickButton()
 	if (IsMenuOn)
 	{
 		OnPlayerMenuClickDelegate.Broadcast();
+	}
+}
+
+void AMyCharacter::PositionClick()
+{
+	// 바닥의 기준을 찾고
+	TArray<UActorComponent*> Components;
+	GetComponents(Components);
+	for (UActorComponent* Component : Components)
+	{
+		if (Component->ComponentHasTag(FName("Ground")))
+		{
+			USceneComponent* getComponent = Cast<USceneComponent>(Component);
+			GroundPosition = getComponent->GetComponentLocation().Z;
+			break;
+		}
+	}
+
+	// 헤드셋과 바닥의 차이가 100으로 되도록 설정하기
+	if (MyCamera->GetComponentLocation().Z - GroundPosition > 100)
+	{
+		FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+		float mPosition = ((MyCamera->GetComponentLocation().Z - GroundPosition) - 100);
+		curLocation.Z = curLocation.Z - mPosition;
+		GetCapsuleComponent()->SetWorldLocation(curLocation);
+		MyGameInstance->SetPlayerHeight("Player", mPosition);
 	}
 }

@@ -43,6 +43,8 @@ public:
 	int GetPlayerStage(FString PlayerType);
 	void SetPlayerName(FString PlayerType, FString SetPlayerName);
 	void SetPlayerStage(FString PlayerType, int SetPlayerStage);
+	float GetPlayerHeight(FString PlayerType);
+	void SetPlayerHeight(FString PlayerType, float SetPlayerHeight);
 
 	// AI 정보 얻어오기
 	float GetAISpeed(FString AIType);
@@ -53,6 +55,7 @@ public:
 	FName GetMapName(int MapType);
 	FName GetNextMapName(int MapType);
 	FText GetMapText(int MapType);
+	FVector GetMapPosition(int MapType);
 
 	// 변수 관련 함수
 	int GetPlayerKill();

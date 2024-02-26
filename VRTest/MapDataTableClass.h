@@ -24,6 +24,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText MapText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector MapStartPoint;
 };
 
 UCLASS()
