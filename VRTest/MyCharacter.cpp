@@ -25,15 +25,17 @@ AMyCharacter::AMyCharacter()
 	MeshLeft = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHLEFT"));
 	MeshRight = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESHRIGHT"));
 
+	CameraHolder = CreateDefaultSubobject<USceneComponent>(TEXT("CAMERAHOLDER"));
 	MyCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("MYCAMERA"));
-	//MyReadyObject = GetCapsuleComponent()->GetChildComponent(0);
 
 	MotionLeft->SetupAttachment(GetCapsuleComponent());
 	MotionRight->SetupAttachment(GetCapsuleComponent());
-	MyCamera->SetupAttachment(GetCapsuleComponent());
-	
+	CameraHolder->SetupAttachment(GetCapsuleComponent());
+
 	MeshLeft->SetupAttachment(MotionLeft);
 	MeshRight->SetupAttachment(MotionRight);
+
+	MyCamera->SetupAttachment(CameraHolder);
 
 	PlayerHasRightObject = false;
 	PlayerHasLeftObject = false;
@@ -94,9 +96,14 @@ void AMyCharacter::BeginPlay()
 
 	GetWorldSettings()->SetTimeDilation(1.0f);
 
+	/*
 	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
 	curLocation.Z = curLocation.Z - MyGameInstance->GetPlayerHeight("Player");
 	GetCapsuleComponent()->SetWorldLocation(curLocation);
+	*/
+	FVector curLocation = CameraHolder->GetRelativeLocation();
+	curLocation.Z = MyGameInstance->GetPlayerHeight("Player");
+	CameraHolder->SetRelativeLocation(curLocation);
 }
 
 // Called every frame
@@ -253,6 +260,12 @@ void AMyCharacter::PressedMenuClickButton()
 
 void AMyCharacter::PositionClick()
 {
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	/*
 	// 바닥의 기준을 찾고
 	TArray<UActorComponent*> Components;
 	GetComponents(Components);
@@ -267,12 +280,18 @@ void AMyCharacter::PositionClick()
 	}
 
 	// 헤드셋과 바닥의 차이가 100으로 되도록 설정하기
-	if (MyCamera->GetComponentLocation().Z - GroundPosition > 100)
+	if (MyCamera->GetComponentLocation().Z - GroundPosition > 50)
 	{
 		FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
-		float mPosition = ((MyCamera->GetComponentLocation().Z - GroundPosition) - 100);
+		float mPosition = ((MyCamera->GetComponentLocation().Z - GroundPosition) - 50);
 		curLocation.Z = curLocation.Z - mPosition;
 		GetCapsuleComponent()->SetWorldLocation(curLocation);
 		MyGameInstance->SetPlayerHeight("Player", mPosition);
 	}
+	*/
+
+	FVector curLocation = CameraHolder->GetRelativeLocation();
+	curLocation.Z = curLocation.Z - 10.0f;
+	CameraHolder->SetRelativeLocation(curLocation);
+	MyGameInstance->SetPlayerHeight("Player", curLocation.Z);
 }

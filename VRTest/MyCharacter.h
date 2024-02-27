@@ -68,6 +68,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Camera)
 		class UCameraComponent* MyCamera;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Camera)
+		class USceneComponent* CameraHolder;
+
 
 	bool IsRightGrip;
 	bool IsLeftGrip;
