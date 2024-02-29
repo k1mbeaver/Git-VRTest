@@ -120,17 +120,17 @@ void UMyGameInstance::SetPlayerStage(FString PlayerType, int SetPlayerStage)
 	PlayerData->PlayerStage = SetPlayerStage;
 }
 
-float UMyGameInstance::GetPlayerHeight(FString PlayerType)
+FVector UMyGameInstance::GetPlayerPosition(FString PlayerType)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerType, TEXT(""));
-	float GetPlayerHeight = PlayerData->PositionHeight;
+	FVector GetPlayerHeight = PlayerData->CustomPosition;
 	return GetPlayerHeight;
 }
 
-void UMyGameInstance::SetPlayerHeight(FString PlayerType, float SetPlayerHeight)
+void UMyGameInstance::SetPlayerPosition(FString PlayerType, FVector SetPlayerPosition)
 {
 	FPlayerDataTable* PlayerData = FPlayerFileTable->FindRow<FPlayerDataTable>(*PlayerType, TEXT(""));
-	PlayerData->PositionHeight = SetPlayerHeight;
+	PlayerData->CustomPosition = SetPlayerPosition;
 }
 
 float UMyGameInstance::GetAISpeed(FString AIType)

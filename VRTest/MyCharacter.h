@@ -42,6 +42,7 @@ private:
 	int PlayerStage;
 	FVector PlayerPosition;
 	float GroundPosition;
+	class APlayerGround* myGround;
 
 public:	
 	// Called every frame
@@ -139,8 +140,22 @@ public:
 		void PlayerDead();
 
 	UFUNCTION(BlueprintCallable)
-		void PositionClick();
+		void PositionUp();
 
+	UFUNCTION(BlueprintCallable)
+		void PositionDown();
+
+	UFUNCTION(BlueprintCallable)
+		void PositionGo();
+
+	UFUNCTION(BlueprintCallable)
+		void PositionBack();
+
+	UFUNCTION(BlueprintCallable)
+		void PositionLeft();
+
+	UFUNCTION(BlueprintCallable)
+		void PositionRight();
 	// 몬스터를 킬했을 시에 호출하는 함수
 	UFUNCTION(BlueprintCallable)
 		void KillingMonster();

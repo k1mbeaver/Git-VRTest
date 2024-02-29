@@ -12,6 +12,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "ReadyObject.h"
+#include "PlayerGround.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -96,14 +97,14 @@ void AMyCharacter::BeginPlay()
 
 	GetWorldSettings()->SetTimeDilation(1.0f);
 
-	/*
-	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
-	curLocation.Z = curLocation.Z - MyGameInstance->GetPlayerHeight("Player");
-	GetCapsuleComponent()->SetWorldLocation(curLocation);
-	*/
-	FVector curLocation = CameraHolder->GetRelativeLocation();
-	curLocation.Z = MyGameInstance->GetPlayerHeight("Player");
-	CameraHolder->SetRelativeLocation(curLocation);
+	FVector customPosition = MyGameInstance->GetPlayerPosition("Player");
+	FVector curPosition = GetCapsuleComponent()->GetComponentLocation();
+
+	curPosition.X += customPosition.X;
+	curPosition.Y += customPosition.Y;
+	curPosition.Z += customPosition.Z;
+
+	GetCapsuleComponent()->SetWorldLocation(curPosition);
 }
 
 // Called every frame
@@ -121,7 +122,13 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("MenuUp", IE_Pressed, this, &AMyCharacter::PressedMenuUpButton);
 	PlayerInputComponent->BindAction("MenuDown", IE_Released, this, &AMyCharacter::PressedMenuDownButton);
 	PlayerInputComponent->BindAction("MenuClick", IE_Pressed, this, &AMyCharacter::PressedMenuClickButton);
-	PlayerInputComponent->BindAction("Position", IE_Pressed, this, &AMyCharacter::PositionClick);
+	PlayerInputComponent->BindAction("PositionUp", IE_Pressed, this, &AMyCharacter::PositionUp);
+	PlayerInputComponent->BindAction("PositionDown", IE_Pressed, this, &AMyCharacter::PositionDown);
+	PlayerInputComponent->BindAction("PositionGo", IE_Pressed, this, &AMyCharacter::PositionGo);
+	PlayerInputComponent->BindAction("PositionBack", IE_Pressed, this, &AMyCharacter::PositionBack);
+	PlayerInputComponent->BindAction("PositionLeft", IE_Pressed, this, &AMyCharacter::PositionLeft);
+	PlayerInputComponent->BindAction("PositionRight", IE_Pressed, this, &AMyCharacter::PositionRight);
+
 }
 
 void AMyCharacter::PressedLeftGrip()
@@ -258,40 +265,230 @@ void AMyCharacter::PressedMenuClickButton()
 	}
 }
 
-void AMyCharacter::PositionClick()
+void AMyCharacter::PositionUp()
 {
 	if (PlayerStage != 8)
 	{
 		return;
 	}
 
-	/*
-	// 바닥의 기준을 찾고
-	TArray<UActorComponent*> Components;
-	GetComponents(Components);
-	for (UActorComponent* Component : Components)
+	if (myGround == nullptr)
 	{
-		if (Component->ComponentHasTag(FName("Ground")))
+		UWorld* world = GetWorld();
+
+		if (world)
 		{
-			USceneComponent* getComponent = Cast<USceneComponent>(Component);
-			GroundPosition = getComponent->GetComponentLocation().Z;
-			break;
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
 		}
 	}
 
-	// 헤드셋과 바닥의 차이가 100으로 되도록 설정하기
-	if (MyCamera->GetComponentLocation().Z - GroundPosition > 50)
-	{
-		FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
-		float mPosition = ((MyCamera->GetComponentLocation().Z - GroundPosition) - 50);
-		curLocation.Z = curLocation.Z - mPosition;
-		GetCapsuleComponent()->SetWorldLocation(curLocation);
-		MyGameInstance->SetPlayerHeight("Player", mPosition);
-	}
-	*/
+	myGround->UpGround();
 
-	FVector curLocation = CameraHolder->GetRelativeLocation();
-	curLocation.Z = curLocation.Z - 10.0f;
-	CameraHolder->SetRelativeLocation(curLocation);
-	MyGameInstance->SetPlayerHeight("Player", curLocation.Z);
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.Z = curLocation.Z + 11.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.Z = curPosition.Z + 11.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
+}
+
+void AMyCharacter::PositionDown()
+{
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	if (myGround == nullptr)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
+		}
+	}
+
+	myGround->DownGround();
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.Z = curLocation.Z - 9.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.Z = curPosition.Z - 9.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
+}
+
+void AMyCharacter::PositionGo()
+{
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	if (myGround == nullptr)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
+		}
+	}
+
+	myGround->GoGround();
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.X = curLocation.X + 10.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.X = curPosition.X + 10.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
+}
+
+void AMyCharacter::PositionBack()
+{
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	if (myGround == nullptr)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
+		}
+	}
+
+	myGround->BackGround();
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.X = curLocation.X - 10.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.X = curPosition.X + 10.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
+}
+
+void AMyCharacter::PositionLeft()
+{
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	if (myGround == nullptr)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
+		}
+	}
+
+	myGround->LeftGround();
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.Y = curLocation.Y - 10.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.Y = curPosition.Y - 10.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
+}
+
+void AMyCharacter::PositionRight()
+{
+	if (PlayerStage != 8)
+	{
+		return;
+	}
+
+	if (myGround == nullptr)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+			TArray<AActor*> FoundActors;
+
+			FString GroundTag = "PlayerGround";
+
+			UGameplayStatics::GetAllActorsWithTag(world, FName(*GroundTag), FoundActors);
+
+			if (FoundActors.Num() > 0)
+			{
+				myGround = Cast<APlayerGround>(FoundActors[0]);
+			}
+		}
+	}
+
+	myGround->RightGround();
+
+	FVector curLocation = GetCapsuleComponent()->GetComponentLocation();
+	curLocation.Y = curLocation.Y + 10.0f;
+	GetCapsuleComponent()->SetWorldLocation(curLocation);
+
+	FVector curPosition = MyGameInstance->GetPlayerPosition("Player");
+	curPosition.Y = curPosition.Y + 10.0f;
+
+	MyGameInstance->SetPlayerPosition("Player", curPosition);
 }

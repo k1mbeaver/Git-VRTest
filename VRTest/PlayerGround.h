@@ -23,4 +23,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+		void UpGround();
+
+	UFUNCTION(BlueprintCallable)
+		void DownGround();
+
+	UFUNCTION(BlueprintCallable)
+		void GoGround();
+
+	UFUNCTION(BlueprintCallable)
+		void BackGround();
+
+	UFUNCTION(BlueprintCallable)
+		void LeftGround();
+
+	UFUNCTION(BlueprintCallable)
+		void RightGround();
 };

@@ -43,8 +43,8 @@ public:
 	int GetPlayerStage(FString PlayerType);
 	void SetPlayerName(FString PlayerType, FString SetPlayerName);
 	void SetPlayerStage(FString PlayerType, int SetPlayerStage);
-	float GetPlayerHeight(FString PlayerType);
-	void SetPlayerHeight(FString PlayerType, float SetPlayerHeight);
+	FVector GetPlayerPosition(FString PlayerType);
+	void SetPlayerPosition(FString PlayerType, FVector SetPlayerPosition);
 
 	// AI 정보 얻어오기
 	float GetAISpeed(FString AIType);

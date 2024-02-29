@@ -23,7 +23,7 @@ public:
 		UParticleSystem* PlayerShootingParticle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float PositionHeight;
+		FVector CustomPosition;
 };
 
 UCLASS()
