@@ -156,6 +156,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PositionRight();
+
+	UFUNCTION(BlueprintCallable)
+		void ControllerInit();
+
 	// 몬스터를 킬했을 시에 호출하는 함수
 	UFUNCTION(BlueprintCallable)
 		void KillingMonster();

@@ -492,3 +492,8 @@ void AMyCharacter::PositionRight()
 
 	MyGameInstance->SetPlayerPosition("Player", curPosition);
 }
+
+void AMyCharacter::ControllerInit()
+{
+	
+}
