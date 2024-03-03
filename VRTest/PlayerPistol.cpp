@@ -8,6 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Controller.h"
+#include "MotionControllerComponent.h"
 
 // Sets default values
 APlayerPistol::APlayerPistol()
@@ -46,12 +47,8 @@ void APlayerPistol::PlayerShot()
 	}
 }
 
-FRotator APlayerPistol::GunInit(FRotator getRotator)
+void APlayerPistol::SetPlayerMotion(UMotionControllerComponent* getController)
 {
-	FRotator HandRotator = getRotator;
-
-	HandRotator.Yaw = HandRotator.Yaw - 90.0f;
-	
-	return HandRotator;
+	PlayerController = getController;
 }
 

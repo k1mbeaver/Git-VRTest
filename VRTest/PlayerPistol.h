@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class APlayerProjectile> ProjectileClass;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = Motion)
+		class UMotionControllerComponent* PlayerController;
+
 	class AMyPlayerController* myPlayerController;
 
 protected:
@@ -38,8 +41,5 @@ public:
 		void PlayerShot();
 
 	UFUNCTION(BlueprintCallable)
-		FRotator GunInit(FRotator getRotator);
-
-	void SetPlayerController();
-
+		void SetPlayerMotion(UMotionControllerComponent* getController);
 };
