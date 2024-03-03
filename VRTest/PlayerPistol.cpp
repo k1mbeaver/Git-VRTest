@@ -46,3 +46,12 @@ void APlayerPistol::PlayerShot()
 	}
 }
 
+FRotator APlayerPistol::GunInit(FRotator getRotator)
+{
+	FRotator HandRotator = getRotator;
+
+	HandRotator.Yaw = HandRotator.Yaw - 90.0f;
+	
+	return HandRotator;
+}
+

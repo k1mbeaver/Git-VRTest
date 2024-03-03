@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void PlayerShot();
 
+	UFUNCTION(BlueprintCallable)
+		FRotator GunInit(FRotator getRotator);
+
 	void SetPlayerController();
 
 };

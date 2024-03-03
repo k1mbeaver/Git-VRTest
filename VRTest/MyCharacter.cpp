@@ -128,7 +128,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("PositionBack", IE_Pressed, this, &AMyCharacter::PositionBack);
 	PlayerInputComponent->BindAction("PositionLeft", IE_Pressed, this, &AMyCharacter::PositionLeft);
 	PlayerInputComponent->BindAction("PositionRight", IE_Pressed, this, &AMyCharacter::PositionRight);
-
 }
 
 void AMyCharacter::PressedLeftGrip()
@@ -491,9 +490,4 @@ void AMyCharacter::PositionRight()
 	curPosition.Y = curPosition.Y + 10.0f;
 
 	MyGameInstance->SetPlayerPosition("Player", curPosition);
-}
-
-void AMyCharacter::ControllerInit()
-{
-	
 }
