@@ -14,4 +14,32 @@ class VRTEST_API UTutorial_UW : public UUserWidget
 {
 	GENERATED_BODY()
 	
+	UPROPERTY(Meta = (BindWidget))
+		class UTextBlock* TextInfo;
+
+	UPROPERTY(Meta = (BindWidget))
+		class UImage* BGImage;
+
+protected:
+	virtual void NativeOnInitialized() override;
+	virtual void NativeConstruct() override;
+
+	float LerpFun(float beginValue, float endValue, float t) 
+	{
+		return beginValue * (1 - t) + (endValue * t);
+	};
+
+	void TransparencyImage(float fSpeed, float fBegin, float fEnd);
+
+public:
+
+	UFUNCTION(BlueprintCallable)
+		void VisibleBackImage(bool bVisible);
+	/*
+	bool IsMenuOn;
+	// KillingPoint ฐüทร
+	void SetCurrentKill();
+	void VisibleKillingPoint();
+	void HiddenKillingPoint();
+	*/
 };

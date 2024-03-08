@@ -264,6 +264,21 @@ void AMyCharacter::PressedMenuClickButton()
 	}
 }
 
+void AMyCharacter::PressedTutorialNextButton()
+{
+	if (PlayerStage == 8)
+	{
+		OnPlayerTutorialNextDelegate.Broadcast();
+	}
+}
+
+void AMyCharacter::PressedTutorialPrevButton()
+{
+	if (PlayerStage == 8)
+	{
+		OnPlayerTutorialPrevDelegate.Broadcast();
+	}
+}
 void AMyCharacter::PositionUp()
 {
 	if (PlayerStage != 8)

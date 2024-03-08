@@ -53,6 +53,9 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UTextBlock* TextPointThree;
 
+	UPROPERTY(Meta = (BindWidget))
+		class UTutorial_UW* Tutorial_WB;
+
 	TArray<UTextBlock*> BtArray;
 	int BtSequence = 0;
 
@@ -80,6 +83,8 @@ public:
 	void MenuUp();
 	void MenuClick();
 
+	// Tutorial 관련
+	
 	// 이벤트
 	UFUNCTION(BlueprintNativeEvent)
 		void OnMenuClick();

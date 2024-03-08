@@ -22,6 +22,8 @@ DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuUpDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuDownDelegate);
 DECLARE_MULTICAST_DELEGATE(FOnPlayerMenuClickDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerTutorialNextDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnPlayerTutorialPrevDelegate);
 
 UCLASS()
 class VRTEST_API AMyCharacter : public ACharacter
@@ -105,6 +107,8 @@ public:
 	FOnPlayerMenuUpDelegate OnPlayerMenuUpDelegate;
 	FOnPlayerMenuDownDelegate OnPlayerMenuDownDelegate;
 	FOnPlayerMenuClickDelegate OnPlayerMenuClickDelegate;
+	FOnPlayerTutorialNextDelegate OnPlayerTutorialNextDelegate;
+	FOnPlayerTutorialPrevDelegate OnPlayerTutorialPrevDelegate;
 
 	UFUNCTION(BlueprintCallable)
 		void PressedMenuButton();
@@ -117,6 +121,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PressedMenuClickButton();
+
+	UFUNCTION(BlueprintCallable)
+		void PressedTutorialNextButton();
+
+	UFUNCTION(BlueprintCallable)
+		void PressedTutorialPrevButton();
 
 	UFUNCTION(BlueprintCallable)
 	void PressedLeftGrip();

@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Styling/SlateBrush.h"
 #include "Styling/SlateTypes.h"
+#include "Tutorial_UW.h"
 
 void UPlayerUI_UW::NativeOnInitialized()
 {
@@ -28,6 +29,7 @@ void UPlayerUI_UW::NativeOnInitialized()
 	TextPointOne = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointOne")));
 	TextPointTwo = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointTwo")));
 	TextPointThree = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextPointThree")));
+	Tutorial_WB = Cast<UTutorial_UW>(GetWidgetFromName(TEXT("Tutorial_WB")));
 }
 
 void UPlayerUI_UW::NativeConstruct()
@@ -73,8 +75,10 @@ void UPlayerUI_UW::NativeConstruct()
 		return;
 	}
 
+	// Æ©Åä¸®¾ó Ã¢
 	else if (PlayerStage == 8)
 	{
+		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
 		return;
 	}
 
