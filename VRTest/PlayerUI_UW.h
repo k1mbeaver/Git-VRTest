@@ -65,6 +65,7 @@ protected:
 
 public:
 	bool IsMenuOn;
+	bool IsTutorial = false;
 	// KillingPoint 관련
 	void SetCurrentKill();
 	void VisibleKillingPoint();
@@ -84,7 +85,11 @@ public:
 	void MenuClick();
 
 	// Tutorial 관련
-	
+	void VisibleTutorial(bool bVisible);
+	void TutorialNext();
+	void TutorialPrev();
+	void TutorialClose();
+
 	// 이벤트
 	UFUNCTION(BlueprintNativeEvent)
 		void OnMenuClick();

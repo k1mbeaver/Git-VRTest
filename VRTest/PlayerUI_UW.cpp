@@ -53,6 +53,9 @@ void UPlayerUI_UW::NativeConstruct()
 	MyPlayerCharacter->OnPlayerMenuUpDelegate.AddUObject(this, &UPlayerUI_UW::MenuUp);
 	MyPlayerCharacter->OnPlayerMenuDownDelegate.AddUObject(this, &UPlayerUI_UW::MenuDown);
 	MyPlayerCharacter->OnPlayerMenuClickDelegate.AddUObject(this, &UPlayerUI_UW::MenuClick);
+	MyPlayerCharacter->OnPlayerTutorialNextDelegate.AddUObject(this, &UPlayerUI_UW::TutorialNext);
+	MyPlayerCharacter->OnPlayerTutorialPrevDelegate.AddUObject(this, &UPlayerUI_UW::TutorialPrev);
+	MyPlayerCharacter->OnPlayerTutorialCloseDelegate.AddUObject(this, &UPlayerUI_UW::TutorialClose);
 
 	BtArray.Insert(TextPointOne, 0);
 	BtArray.Insert(TextPointTwo, 1);
@@ -79,6 +82,7 @@ void UPlayerUI_UW::NativeConstruct()
 	else if (PlayerStage == 8)
 	{
 		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
+		IsTutorial = true;
 		return;
 	}
 
@@ -285,4 +289,36 @@ void UPlayerUI_UW::FocusButton()
 void UPlayerUI_UW::UnFocusButton()
 {
 	BtArray[BtSequence]->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UPlayerUI_UW::VisibleTutorial(bool bVisible)
+{
+	if (bVisible)
+	{
+		Tutorial_WB->VisibleBackImage(true);
+	}
+
+	else
+	{
+		Tutorial_WB->VisibleBackImage(false);
+	}
+}
+
+void UPlayerUI_UW::TutorialNext()
+{
+	VisibleTutorial(true);
+
+	// 여기서 다음 설명을 출력하게
+}
+
+void UPlayerUI_UW::TutorialPrev()
+{
+	VisibleTutorial(true);
+
+	// 여기서 이전 설명을 출력하게
+}
+
+void UPlayerUI_UW::TutorialClose()
+{
+	VisibleTutorial(false);
 }

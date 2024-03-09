@@ -279,6 +279,15 @@ void AMyCharacter::PressedTutorialPrevButton()
 		OnPlayerTutorialPrevDelegate.Broadcast();
 	}
 }
+
+void AMyCharacter::PressedTutorialCloseButton()
+{
+	if (PlayerStage == 8)
+	{
+		OnPlayerTutorialCloseDelegate.Broadcast();
+	}
+}
+
 void AMyCharacter::PositionUp()
 {
 	if (PlayerStage != 8)
