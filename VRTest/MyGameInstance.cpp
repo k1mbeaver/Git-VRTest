@@ -8,6 +8,7 @@
 #include "AnimationDataTableClass.h"
 #include "AIDataTableClass.h"
 #include "MapDataTableClass.h"
+#include "TutorialDataTableClass.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -63,6 +64,15 @@ UMyGameInstance::UMyGameInstance()
 	if (DT_MYMAPFILE.Succeeded())
 	{
 		FMapFileTable = DT_MYMAPFILE.Object;
+	}
+
+	FString TutorialFileDataPath = TEXT("DataTable'/Game/DataTable/MapDataTable.MapDataTable'");
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYTUTORIALFILE(*TutorialFileDataPath);
+
+	if (DT_MYTUTORIALFILE.Succeeded())
+	{
+		FTutorialFileTable = DT_MYTUTORIALFILE.Object;
 	}
 }
 
@@ -201,4 +211,12 @@ void UMyGameInstance::SetPlayerKill()
 void UMyGameInstance::InitializePlayerKill()
 {
 	nPlayerKill = 0;
+}
+
+FString UMyGameInstance::GetTutorialText(int nSequence)
+{
+	FString strSequence = FString::FromInt(nSequence);
+	FTutorialDataTable* TutorialData = FTutorialFileTable->FindRow<FTutorialDataTable>(*strSequence, TEXT(""));
+	FString GetText = TutorialData->TutorialText;
+	return GetText;
 }

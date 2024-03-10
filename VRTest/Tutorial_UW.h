@@ -20,6 +20,8 @@ class VRTEST_API UTutorial_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UImage* BGImage;
 
+public:
+	bool IsVisible = false;
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
@@ -35,6 +37,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void VisibleBackImage(bool bVisible);
+
+	UFUNCTION(BlueprintCallable)
+		void SetTutorialText(FString myText);
 	/*
 	bool IsMenuOn;
 	// KillingPoint ฐüทร

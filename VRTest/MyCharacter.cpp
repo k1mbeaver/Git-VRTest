@@ -128,6 +128,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("PositionBack", IE_Pressed, this, &AMyCharacter::PositionBack);
 	PlayerInputComponent->BindAction("PositionLeft", IE_Pressed, this, &AMyCharacter::PositionLeft);
 	PlayerInputComponent->BindAction("PositionRight", IE_Pressed, this, &AMyCharacter::PositionRight);
+	PlayerInputComponent->BindAction("TutorialPrev", IE_Pressed, this, &AMyCharacter::PressedTutorialPrevButton);
+	PlayerInputComponent->BindAction("TutorialNext", IE_Pressed, this, &AMyCharacter::PressedTutorialNextButton);
+	PlayerInputComponent->BindAction("TutorialClose", IE_Pressed, this, &AMyCharacter::PressedTutorialCloseButton);
 }
 
 void AMyCharacter::PressedLeftGrip()

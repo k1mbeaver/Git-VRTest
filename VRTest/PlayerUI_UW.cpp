@@ -81,6 +81,7 @@ void UPlayerUI_UW::NativeConstruct()
 	// 튜토리얼 창
 	else if (PlayerStage == 8)
 	{
+		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
 		IsTutorial = true;
 		return;
@@ -306,19 +307,38 @@ void UPlayerUI_UW::VisibleTutorial(bool bVisible)
 
 void UPlayerUI_UW::TutorialNext()
 {
-	VisibleTutorial(true);
+	if (Tutorial_WB->IsVisible == true)
+	{
+		return;
+	}
 
-	// 여기서 다음 설명을 출력하게
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	TutorialSequence++;
+	Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
+
+	VisibleTutorial(true);
 }
 
 void UPlayerUI_UW::TutorialPrev()
 {
-	VisibleTutorial(true);
+	if (Tutorial_WB->IsVisible == true)
+	{
+		return;
+	}
 
-	// 여기서 이전 설명을 출력하게
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	TutorialSequence--;
+	Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
+
+	VisibleTutorial(true);
 }
 
 void UPlayerUI_UW::TutorialClose()
 {
+	if (Tutorial_WB->IsVisible == false)
+	{
+		return;
+	}
+
 	VisibleTutorial(false);
 }

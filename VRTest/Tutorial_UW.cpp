@@ -46,11 +46,13 @@ void UTutorial_UW::VisibleBackImage(bool bVisible)
 {
 	if (bVisible)
 	{
+		IsVisible = true;
 		TransparencyImage(0.05, 0.0f, 1.0f);
 	}
 
 	else
 	{
+		IsVisible = false;
 		TransparencyImage(0.05, 1.0f, 0.0f);
 	}
 }
@@ -59,4 +61,10 @@ void UTutorial_UW::TransparencyImage(float fSpeed, float fBegin, float fEnd)
 {
 	FLinearColor NewColor = FLinearColor(0.0f, 0.0f, 0.0f, LerpFun(fBegin, fEnd, fSpeed));
 	BGImage->SetColorAndOpacity(NewColor);
+}
+
+void UTutorial_UW::SetTutorialText(FString myText)
+{
+	FText myT = FText::FromString(myText);
+	TextInfo->SetText(myT);
 }

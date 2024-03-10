@@ -58,6 +58,7 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 
 	TArray<UTextBlock*> BtArray;
 	int BtSequence = 0;
+	int TutorialSequence = 0;
 
 protected:
 	virtual void NativeOnInitialized() override;

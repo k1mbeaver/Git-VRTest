@@ -62,6 +62,9 @@ public:
 	void SetPlayerKill();
 	void InitializePlayerKill();
 
+	// Tutorial 정보 얻어오기
+	FString GetTutorialText(int nSequence);
+
 	// 변수
 	int nPlayerKill = 0;
 	
@@ -84,5 +87,8 @@ private:
 
 	UPROPERTY()
 		UDataTable* FMapFileTable;
+
+	UPROPERTY()
+		UDataTable* FTutorialFileTable;
 
 };
