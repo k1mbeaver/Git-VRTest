@@ -89,7 +89,6 @@ public:
 	void VisibleTutorial(bool bVisible);
 	void TutorialNext();
 	void TutorialPrev();
-	void TutorialClose();
 
 	// ¿Ã∫•∆Æ
 	UFUNCTION(BlueprintNativeEvent)

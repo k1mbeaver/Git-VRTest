@@ -20,11 +20,20 @@ class VRTEST_API UTutorial_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UImage* BGImage;
 
+protected:
+	float CurrentFadeValue = 0.0f;
+
 public:
 	bool IsVisible = false;
+	bool IsFading = false; // 페이드 활성화
+	bool IsFadeIn = false; // true면 페이드인, false면 페이드 아웃
+
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+		void WidgetTick(float DeltaTime);
 
 	float LerpFun(float beginValue, float endValue, float t) 
 	{

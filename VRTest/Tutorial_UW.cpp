@@ -47,13 +47,13 @@ void UTutorial_UW::VisibleBackImage(bool bVisible)
 	if (bVisible)
 	{
 		IsVisible = true;
-		TransparencyImage(0.05, 0.0f, 1.0f);
+		TransparencyImage(0.01, 0.0f, 1.0f);
 	}
 
 	else
 	{
 		IsVisible = false;
-		TransparencyImage(0.05, 1.0f, 0.0f);
+		TransparencyImage(0.01, 1.0f, 0.0f);
 	}
 }
 
@@ -67,4 +67,33 @@ void UTutorial_UW::SetTutorialText(FString myText)
 {
 	FText myT = FText::FromString(myText);
 	TextInfo->SetText(myT);
+}
+
+void UTutorial_UW::WidgetTick(float DeltaTime)
+{
+	if (IsFading)
+	{
+		// 화면을 활성화 할 때
+		if (IsFadeIn)
+		{
+			CurrentFadeValue += DeltaTime;
+		}
+
+		// 화면을 끌 때
+		else
+		{
+			CurrentFadeValue += -DeltaTime;
+		}
+		CurrentFadeValue = FMath::Clamp(CurrentFadeValue, 0.0f, 1.0f);
+
+		// 페이드 인/아웃을 위한 투명도 업데이트 함수를 호출합니다.
+		TransparencyImage(CurrentFadeValue, 0.0f, 1.0f);
+
+		// 페이드가 완료되었는지 확인하고, 필요한 경우 추가 액션을 수행합니다.
+		if (CurrentFadeValue == 0.0f || CurrentFadeValue == 1.0f)
+		{
+			IsFading = false;
+			// 필요한 경우 추가 액션을 수행합니다.
+		}
+	}
 }

@@ -66,7 +66,7 @@ UMyGameInstance::UMyGameInstance()
 		FMapFileTable = DT_MYMAPFILE.Object;
 	}
 
-	FString TutorialFileDataPath = TEXT("DataTable'/Game/DataTable/MapDataTable.MapDataTable'");
+	FString TutorialFileDataPath = TEXT("DataTable'/Game/DataTable/TutorialDataTable.TutorialDataTable'");
 
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MYTUTORIALFILE(*TutorialFileDataPath);
 

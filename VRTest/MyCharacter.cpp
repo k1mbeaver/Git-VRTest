@@ -130,7 +130,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("PositionRight", IE_Pressed, this, &AMyCharacter::PositionRight);
 	PlayerInputComponent->BindAction("TutorialPrev", IE_Pressed, this, &AMyCharacter::PressedTutorialPrevButton);
 	PlayerInputComponent->BindAction("TutorialNext", IE_Pressed, this, &AMyCharacter::PressedTutorialNextButton);
-	PlayerInputComponent->BindAction("TutorialClose", IE_Pressed, this, &AMyCharacter::PressedTutorialCloseButton);
 }
 
 void AMyCharacter::PressedLeftGrip()
@@ -280,14 +279,6 @@ void AMyCharacter::PressedTutorialPrevButton()
 	if (PlayerStage == 8)
 	{
 		OnPlayerTutorialPrevDelegate.Broadcast();
-	}
-}
-
-void AMyCharacter::PressedTutorialCloseButton()
-{
-	if (PlayerStage == 8)
-	{
-		OnPlayerTutorialCloseDelegate.Broadcast();
 	}
 }
 

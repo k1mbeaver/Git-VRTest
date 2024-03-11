@@ -55,7 +55,6 @@ void UPlayerUI_UW::NativeConstruct()
 	MyPlayerCharacter->OnPlayerMenuClickDelegate.AddUObject(this, &UPlayerUI_UW::MenuClick);
 	MyPlayerCharacter->OnPlayerTutorialNextDelegate.AddUObject(this, &UPlayerUI_UW::TutorialNext);
 	MyPlayerCharacter->OnPlayerTutorialPrevDelegate.AddUObject(this, &UPlayerUI_UW::TutorialPrev);
-	MyPlayerCharacter->OnPlayerTutorialCloseDelegate.AddUObject(this, &UPlayerUI_UW::TutorialClose);
 
 	BtArray.Insert(TextPointOne, 0);
 	BtArray.Insert(TextPointTwo, 1);
@@ -83,6 +82,7 @@ void UPlayerUI_UW::NativeConstruct()
 	{
 		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
+		VisibleTutorial(true);
 		IsTutorial = true;
 		return;
 	}
@@ -307,38 +307,42 @@ void UPlayerUI_UW::VisibleTutorial(bool bVisible)
 
 void UPlayerUI_UW::TutorialNext()
 {
-	if (Tutorial_WB->IsVisible == true)
+	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
+	if (Tutorial_WB->IsFadeIn == true)
 	{
-		return;
+		Tutorial_WB->IsFadeIn = false;
+		Tutorial_WB->IsFading = true;
 	}
 
-	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	TutorialSequence++;
-	Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
+	// 아니면 (페이드 아웃 상태)
+	else
+	{
+		UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+		TutorialSequence++;
+		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 
-	VisibleTutorial(true);
+		Tutorial_WB->IsFadeIn = true;
+		Tutorial_WB->IsFading = true;
+	}
 }
 
 void UPlayerUI_UW::TutorialPrev()
 {
-	if (Tutorial_WB->IsVisible == true)
+	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
+	if (Tutorial_WB->IsFadeIn == true)
 	{
-		return;
+		Tutorial_WB->IsFadeIn = false;
+		Tutorial_WB->IsFading = true;
 	}
 
-	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	TutorialSequence--;
-	Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
-
-	VisibleTutorial(true);
-}
-
-void UPlayerUI_UW::TutorialClose()
-{
-	if (Tutorial_WB->IsVisible == false)
+	// 아니면 (페이드 아웃 상태)
+	else
 	{
-		return;
-	}
+		UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+		TutorialSequence--;
+		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 
-	VisibleTutorial(false);
+		Tutorial_WB->IsFadeIn = true;
+		Tutorial_WB->IsFading = true;
+	}
 }
