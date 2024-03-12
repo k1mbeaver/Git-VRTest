@@ -21,25 +21,8 @@ void UTutorial_UW::NativeConstruct()
 	Super::NativeConstruct();
 	// BeginPlay 처럼 활용
 
-	/*
-	IsMenuOn = false;
-
-	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
-	AMyCharacter* MyPlayerCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
-
-	int PlayerStage = MyGameInstance->GetPlayerStage("Player");
-	int StageMonsters = MyGameInstance->GetAICount(PlayerStage);
-
-	FString strStageMonsters = FString::FromInt(StageMonsters);
-	FText ftStageMonsters = FText::FromString(strStageMonsters);
-	TextDefaultKill->SetText(ftStageMonsters);
-
-	MyGameInstance->OnPlayerKill.AddUObject(this, &UPlayerUI_UW::SetCurrentKill);
-	MyPlayerCharacter->OnPlayerMenuDelegate.AddUObject(this, &UPlayerUI_UW::SetMenu);
-	MyPlayerCharacter->OnPlayerMenuUpDelegate.AddUObject(this, &UPlayerUI_UW::MenuUp);
-	MyPlayerCharacter->OnPlayerMenuDownDelegate.AddUObject(this, &UPlayerUI_UW::MenuDown);
-	MyPlayerCharacter->OnPlayerMenuClickDelegate.AddUObject(this, &UPlayerUI_UW::MenuClick);
-	*/
+	IsFading = true;
+	IsFadeIn = true;
 }
 
 void UTutorial_UW::VisibleBackImage(bool bVisible)
@@ -96,4 +79,20 @@ void UTutorial_UW::WidgetTick(float DeltaTime)
 			// 필요한 경우 추가 액션을 수행합니다.
 		}
 	}
+}
+
+void UTutorial_UW::TutorialFadeIn(int nSequence)
+{
+	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
+	SetTutorialText(MyGameInstance->GetTutorialText(nSequence));
+
+	IsFadeIn = true;
+	IsFading = true;
+}
+
+void UTutorial_UW::TutorialFadeOut()
+{
+	TextInfo->SetVisibility(ESlateVisibility::Hidden);
+	IsFadeIn = false;
+	IsFading = true;
 }

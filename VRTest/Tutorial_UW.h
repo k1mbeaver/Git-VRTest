@@ -25,8 +25,8 @@ protected:
 
 public:
 	bool IsVisible = false;
-	bool IsFading = false; // 페이드 활성화
-	bool IsFadeIn = false; // true면 페이드인, false면 페이드 아웃
+	bool IsFading; // 페이드 활성화
+	bool IsFadeIn; // true면 페이드인, false면 페이드 아웃
 
 protected:
 	virtual void NativeOnInitialized() override;
@@ -49,6 +49,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetTutorialText(FString myText);
+
+	UFUNCTION(BlueprintCallable)
+		void TutorialFadeOut();
+
+	UFUNCTION(BlueprintCallable)
+		void TutorialFadeIn(int nSequence);
 	/*
 	bool IsMenuOn;
 	// KillingPoint 관련
