@@ -310,8 +310,7 @@ void UPlayerUI_UW::TutorialNext()
 	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
 	if (Tutorial_WB->IsFadeIn == true)
 	{
-		Tutorial_WB->IsFadeIn = false;
-		Tutorial_WB->IsFading = true;
+		Tutorial_WB->TutorialFadeOut();
 	}
 
 	// 아니면 (페이드 아웃 상태)
@@ -321,8 +320,7 @@ void UPlayerUI_UW::TutorialNext()
 		TutorialSequence++;
 		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 
-		Tutorial_WB->IsFadeIn = true;
-		Tutorial_WB->IsFading = true;
+		Tutorial_WB->TutorialFadeIn(TutorialSequence);
 	}
 }
 
@@ -331,8 +329,7 @@ void UPlayerUI_UW::TutorialPrev()
 	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
 	if (Tutorial_WB->IsFadeIn == true)
 	{
-		Tutorial_WB->IsFadeIn = false;
-		Tutorial_WB->IsFading = true;
+		Tutorial_WB->TutorialFadeOut();
 	}
 
 	// 아니면 (페이드 아웃 상태)
@@ -342,7 +339,6 @@ void UPlayerUI_UW::TutorialPrev()
 		TutorialSequence--;
 		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 
-		Tutorial_WB->IsFadeIn = true;
-		Tutorial_WB->IsFading = true;
+		Tutorial_WB->TutorialFadeIn(TutorialSequence);
 	}
 }
