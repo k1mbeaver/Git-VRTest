@@ -80,6 +80,7 @@ void UPlayerUI_UW::NativeConstruct()
 	// 튜토리얼 창
 	else if (PlayerStage == 8)
 	{
+		DefaultSequence = MyGameInstance->GetTutorialSequence();
 		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
 		VisibleTutorial(true);
@@ -307,6 +308,18 @@ void UPlayerUI_UW::VisibleTutorial(bool bVisible)
 
 void UPlayerUI_UW::TutorialNext()
 {
+	// 만약 메뉴가 켜져있다면?
+	if (IsMenuOn)
+	{
+		return;
+	}
+
+	// 만약 마지막 순서이면?
+	if (TutorialSequence >= DefaultSequence - 1)
+	{
+		return;
+	}
+
 	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
 	if (Tutorial_WB->IsFadeIn == true)
 	{
@@ -326,6 +339,18 @@ void UPlayerUI_UW::TutorialNext()
 
 void UPlayerUI_UW::TutorialPrev()
 {
+	// 만약 메뉴가 켜져있다면?
+	if (IsMenuOn)
+	{
+		return;
+	}
+
+	// 만약 첫 번쨰 차례이면
+	if (TutorialSequence <= 0)
+	{
+		return;
+	}
+
 	// 만약 현재 안내 해주고 있는 상황이면 (페이드 인 상태)
 	if (Tutorial_WB->IsFadeIn == true)
 	{

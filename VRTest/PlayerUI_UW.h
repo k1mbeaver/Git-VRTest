@@ -59,13 +59,14 @@ class VRTEST_API UPlayerUI_UW : public UUserWidget
 	TArray<UTextBlock*> BtArray;
 	int BtSequence = 0;
 	int TutorialSequence = 0;
+	int DefaultSequence = 0;
+	bool IsMenuOn = false;
 
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
 
 public:
-	bool IsMenuOn;
 	bool IsTutorial = false;
 	// KillingPoint ฐüทร
 	void SetCurrentKill();

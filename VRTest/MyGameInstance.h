@@ -63,6 +63,7 @@ public:
 	void InitializePlayerKill();
 
 	// Tutorial 정보 얻어오기
+	int GetTutorialSequence();
 	FString GetTutorialText(int nSequence);
 
 	// 변수

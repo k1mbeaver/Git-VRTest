@@ -17,16 +17,13 @@ class VRTEST_API UTutorial_UW : public UUserWidget
 	UPROPERTY(Meta = (BindWidget))
 		class UTextBlock* TextInfo;
 
-	UPROPERTY(Meta = (BindWidget))
-		class UImage* BGImage;
-
 protected:
 	float CurrentFadeValue = 0.0f;
 
 public:
 	bool IsVisible = false;
-	bool IsFading; // 페이드 활성화
-	bool IsFadeIn; // true면 페이드인, false면 페이드 아웃
+	bool IsFading = true; // 페이드 활성화
+	bool IsFadeIn = true; // true면 페이드인, false면 페이드 아웃
 
 protected:
 	virtual void NativeOnInitialized() override;

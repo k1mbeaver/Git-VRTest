@@ -220,3 +220,14 @@ FString UMyGameInstance::GetTutorialText(int nSequence)
 	FString GetText = TutorialData->TutorialText;
 	return GetText;
 }
+
+int UMyGameInstance::GetTutorialSequence()
+{
+	if (!FTutorialFileTable)
+	{
+		return 0;
+	}
+
+	int NumberOfRows = FTutorialFileTable->GetRowMap().Num();
+	return NumberOfRows;
+}

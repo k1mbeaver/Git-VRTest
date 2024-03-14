@@ -3,7 +3,6 @@
 
 #include "Tutorial_UW.h"
 #include "Components/TextBlock.h"
-#include "Components/Image.h"
 #include "MyGameInstance.h"
 #include "MyCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -13,7 +12,6 @@ void UTutorial_UW::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	TextInfo = Cast<UTextBlock>(GetWidgetFromName(TEXT("TextInfo")));
-	BGImage = Cast<UImage>(GetWidgetFromName(TEXT("BGImage")));
 }
 
 void UTutorial_UW::NativeConstruct()
@@ -21,8 +19,6 @@ void UTutorial_UW::NativeConstruct()
 	Super::NativeConstruct();
 	// BeginPlay 처럼 활용
 
-	IsFading = true;
-	IsFadeIn = true;
 }
 
 void UTutorial_UW::VisibleBackImage(bool bVisible)
@@ -42,8 +38,8 @@ void UTutorial_UW::VisibleBackImage(bool bVisible)
 
 void UTutorial_UW::TransparencyImage(float fSpeed, float fBegin, float fEnd)
 {
-	FLinearColor NewColor = FLinearColor(0.0f, 0.0f, 0.0f, LerpFun(fBegin, fEnd, fSpeed));
-	BGImage->SetColorAndOpacity(NewColor);
+	FLinearColor NewColor = FLinearColor(0.5f, 0.5f, 0.5f, LerpFun(fBegin, fEnd, fSpeed));
+	TextInfo->SetColorAndOpacity(NewColor);
 }
 
 void UTutorial_UW::SetTutorialText(FString myText)
@@ -67,6 +63,7 @@ void UTutorial_UW::WidgetTick(float DeltaTime)
 		{
 			CurrentFadeValue += -DeltaTime;
 		}
+
 		CurrentFadeValue = FMath::Clamp(CurrentFadeValue, 0.0f, 1.0f);
 
 		// 페이드 인/아웃을 위한 투명도 업데이트 함수를 호출합니다.
@@ -76,7 +73,6 @@ void UTutorial_UW::WidgetTick(float DeltaTime)
 		if (CurrentFadeValue == 0.0f || CurrentFadeValue == 1.0f)
 		{
 			IsFading = false;
-			// 필요한 경우 추가 액션을 수행합니다.
 		}
 	}
 }
@@ -85,6 +81,7 @@ void UTutorial_UW::TutorialFadeIn(int nSequence)
 {
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance());
 	SetTutorialText(MyGameInstance->GetTutorialText(nSequence));
+	TextInfo->SetVisibility(ESlateVisibility::Visible);
 
 	IsFadeIn = true;
 	IsFading = true;
