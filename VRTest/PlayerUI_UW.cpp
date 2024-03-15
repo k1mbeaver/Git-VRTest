@@ -81,6 +81,7 @@ void UPlayerUI_UW::NativeConstruct()
 	else if (PlayerStage == 8)
 	{
 		DefaultSequence = MyGameInstance->GetTutorialSequence();
+		Tutorial_WB->DefaultSequence = DefaultSequence;
 		Tutorial_WB->SetTutorialText(MyGameInstance->GetTutorialText(TutorialSequence));
 		Tutorial_WB->SetVisibility(ESlateVisibility::Visible);
 		VisibleTutorial(true);
